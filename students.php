@@ -51,12 +51,21 @@ include_once "connection.php";
 
             <div class="dropdowns" id="">
 
-                <select name="" id="classFilter" onchange="filterTable()" class="select-custom">
+                <select name="" id="" onchange="filterTable()" class="select-custom classFilter">
                     <option value="All">All Classes</option>
                     <?php include "classDropdown.php" ?>
                 </select>
                 <i class="fa-solid fa-chevron-down"></i>
 
+            </div>
+
+            <!-- SECTION DROPDOWN -->
+            <div class="dropdowns">
+                <select name="" id="sectionFilter" onchange="filterTable()" class="select-custom sectionDropdown" required>
+                    <option disabled selected value="All">Select Class First</option>
+                    <?php include "sectionDropdown.php" ?>
+                </select>
+                <i class="fa-solid fa-chevron-down"></i>
             </div>
 
             <div class="dropdowns">
@@ -123,8 +132,8 @@ include_once "connection.php";
                                 </td>
                                 <td><?php echo $row1['gender'] ?></td>
                                 <td><?php echo $row1['address'] ?></td>
-                                <td><?php echo $row1['class_id'];
-                                    echo $row1['section_name']; ?></td>
+                                <td><?php echo $row1['class_id']; ?> -
+                                    <?php echo $row1['section_name']; ?></td>
                                 <td>
                                     <span class="status active"><?php echo $row1['status'] ?></span>
                                 </td>
@@ -156,7 +165,7 @@ include_once "connection.php";
     include_once "student-form.php";
 
     // confirmation dialogue box
-    include_once "confirmation-dialogue-box.php"
+    include "confirmation-dialogue-box.php"
     ?>
 
     <!-- TOAST NOTIFICATIONS CONTAINER -->

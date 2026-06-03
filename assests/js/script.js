@@ -6,12 +6,35 @@ if (addBtn && studentModal) {
 
     addBtn.addEventListener('click', function () {
 
+        resetModal()
+
         document.querySelector("#id-input").value = "";
         document.querySelector("#old-image").value = "";
         document.querySelector("#image-input").value = "";
 
+        document.querySelector("#name-input").value = "";
+        document.querySelector("#age-input").value = "";
+        document.querySelector("#phone-input").value = "";
+        document.querySelector("#address-input").value = "";
+        document.querySelector("#email-input").value = "";
+        document.querySelector(".selectClass").value = "All";
+        document.querySelector("#genderDropdown").value = "Male";
+        document.querySelector("#statusDropdown").value = "Active";
+        // document.querySelector("#sectionDropdown").value = "select-class";
+
+
+        // show remove photo btn button
+        let remove_photoBtn = document.querySelector(".remove-photo-btn");
+        remove_photoBtn.style.display = "none";
+
         studentModal.classList.add("open");
     })
+}
+
+function resetModal() {
+    document.querySelector(".sectionDropdown").innerHTML = `
+     <option disabled selected value="All">Select Class First</option>
+    `
 }
 
 // section dropdown
@@ -21,14 +44,14 @@ function loadSections(classId, selectedSection = null) {
         .then(response => response.json())
         .then(data => {
 
-            let sectionDropdown = document.querySelector("#sectionDropdown");
+            let sectionDropdown = document.querySelector(".sectionDropdown");
 
             sectionDropdown.innerHTML = "";
 
             data.forEach(item => {
 
                 sectionDropdown.innerHTML += `
-                    <option value="${item.sec_id}">
+                    <option value="${item.section_name}">
                         ${item.section_name}
                     </option>
                 `;
@@ -72,11 +95,11 @@ if (updateBtn && studentModal) {
                     document.querySelector("#phone-input").value = data.student_phone_num;
                     document.querySelector("#address-input").value = data.student_address;
                     document.querySelector("#email-input").value = data.student_email;
-                    document.querySelector("#selectClass").value = data.student_class;
+                    document.querySelector(".selectClass").value = data.student_class;
                     document.querySelector("#genderDropdown").value = data.student_gender;
                     document.querySelector("#statusDropdown").value = data.student_status;
 
-                    document.querySelector("#selectClass").value = data.student_class;
+                    document.querySelector(".selectClass").value = data.student_class;
 
                     loadSections(
                         data.student_class,
@@ -230,7 +253,7 @@ document.querySelectorAll(".subject-teacher-list-trigger").forEach(btn => {
     })
 });
 
-// FOR REMOVE CLASS CLOSE IN STUDENT MODAL
+// FOR REMOVE CLASS CLOSE IN MODALs
 let closeModal = () => {
 
     if (sectionModal) {
@@ -239,6 +262,7 @@ let closeModal = () => {
 
     if (studentModal) {
         studentModal.classList.remove("open");
+        resetModal();
     }
 
     if (sec_detailModal) {
@@ -253,7 +277,9 @@ let closeModal = () => {
 
 // ---------APPLY FILTERS----------
 let searchValue = document.querySelector("#searchInput");
-searchValue.addEventListener("keyup", filterTable);
+if (searchValue) {
+    searchValue.addEventListener("keyup", filterTable);
+}
 
 // call function
 
@@ -261,9 +287,16 @@ function filterTable() {
 
     // for apply filter on student record
     let searchInput = searchValue.value.toLowerCase();
-    let classFilter = document.querySelector("#classFilter").value;
+    let classFilter = document.querySelector(".classFilter").value;
     let genderFilter = document.querySelector("#genderFilter").value;
+    let sectionFilter = document.querySelector("#sectionFilter").value;
+    console.log(sectionFilter);
 
+    // classFilter.addEventListener('change', function () {
+
+    //     loadSections(this.value);
+
+    // })
 
     let rows = document.querySelectorAll("#studentTable tbody tr");
 
@@ -277,11 +310,10 @@ function filterTable() {
 
         let searchMatch = id.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput);
         let genderMatch = genderFilter == "All" || genderFilter == gender;
-        let classMatch = classFilter == "All" || studentClass.includes(classFilter);
-        console.log(classMatch);
-        // console.log(genderMatch);
+        let classMatch = classFilter == "All" || studentClass.startsWith(classFilter);
+        let sectionMatch = sectionFilter == "All" || studentClass.endsWith(sectionFilter);
 
-        if (searchMatch && genderMatch && classMatch) {
+        if (searchMatch && genderMatch && classMatch && sectionMatch) {
             row.style.display = "";
         } else {
             row.style.display = "none";
@@ -294,7 +326,7 @@ function resetFilter() {
     let rows = document.querySelectorAll("#studentTable tbody tr");
 
     let searchInput = searchValue.value = "";
-    let classFilter = document.querySelector("#classFilter").value = "All";
+    let classFilter = document.querySelector(".classFilter").value = "All";
     let genderFilter = document.querySelector("#genderFilter").value = "All";
 
     rows.forEach(row => {
@@ -417,18 +449,22 @@ let cardPicture = document.querySelector(".card-picture");
 let imageInput = document.querySelector("#image-input");
 // let image = document.querySelector(".previewImg");
 
-cardPicture.addEventListener('click', function () {
+if (cardPicture) {
+    cardPicture.addEventListener('click', function () {
 
-    imageInput.click();
+        imageInput.click();
 
-})
+    })
+}
 
 //FOR PRIVIEW Image
-imageInput.addEventListener('change', function () {
+if (imageInput) {
 
-    const file = this.files[0];
+    imageInput.addEventListener('change', function () {
 
-    cardPicture.innerHTML = `
+        const file = this.files[0];
+
+        cardPicture.innerHTML = `
     <img src= "${URL.createObjectURL(file)}" class=""> 
      <div class="avatar-overlay">
         <i class="fa-solid fa-camera"></i>
@@ -436,10 +472,12 @@ imageInput.addEventListener('change', function () {
     </div>
     `
 
-    let remove_photoBtn = document.querySelector(".remove-photo-btn");
-    remove_photoBtn.style.display = "flex";
+        let remove_photoBtn = document.querySelector(".remove-photo-btn");
+        remove_photoBtn.style.display = "flex";
 
-})
+    })
+
+}
 
 // FOR RESET IMAGE
 function resetImage() {
@@ -454,7 +492,7 @@ function resetImage() {
 }
 
 // To make section dropdown dynamically
-let selectClass = document.querySelector("#selectClass");
+let selectClass = document.querySelector(".selectClass");
 
 if (selectClass) {
 
@@ -507,20 +545,30 @@ function openConfirmBox(title, message, isDanger, callback) {
 }
 
 // CONFIRM CANCEL
-document.querySelector('#confirmCancelBtn').addEventListener('click', () => {
-    document.querySelector('#custom-confirm-wrapper').classList.remove('open');
-    pendingConfirmCallback = null;
-});
+let cancelBtn = document.querySelector('#confirmCancelBtn');
+if (cancelBtn) {
+    cancelBtn.addEventListener('click', () => {
+        document.querySelector('#custom-confirm-wrapper').classList.remove('open');
+        pendingConfirmCallback = null;
+    });
+
+}
 
 // CONFIRM OK
-document.querySelector('#confirmOkBtn').addEventListener('click', () => {
-    document.querySelector('.custom-confirm-box').classList.remove('open');
+let confirmOKBtn = document.querySelector('#confirmOkBtn');
 
-    if (pendingConfirmCallback) {
-        pendingConfirmCallback();
-        pendingConfirmCallback = null;
-    }
-});
+if (confirmOKBtn) {
+
+    confirmOKBtn.addEventListener('click', () => {
+        document.querySelector('.custom-confirm-box').classList.remove('open');
+
+        if (pendingConfirmCallback) {
+            pendingConfirmCallback();
+            pendingConfirmCallback = null;
+        }
+    });
+
+}
 
 let studentForm = document.querySelector("#studentForm");
 
@@ -592,7 +640,7 @@ if (deleteBtns.length > 0) {
 
 }
 
-// Toast Alert Dispatcher System
+// Toast Alert 
 function showToast(message, type = 'success', title = '') {
     const container = document.getElementById('toastContainer');
     if (!container) return;
@@ -637,3 +685,54 @@ function hideToast(toast) {
     toast.classList.add('toast-hide');
     toast.addEventListener('transitionend', () => toast.remove());
 }
+
+// DYNAMIC SECTION DROPDOWN FOR ATTENDECE PAGE
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    let attendanceClassFilter = document.querySelector(".classFilter");
+
+    if (attendanceClassFilter) {
+
+        attendanceClassFilter.addEventListener('change', function () {
+
+            let classId = this.value;
+
+            let attendanceSectionDropdown = document.querySelector(".sectionDropdown");
+
+            if (!attendanceSectionDropdown) return;
+
+            if (classId === "All" || classId === "") {
+                attendanceSectionDropdown.innerHTML = '<option value="All" disabled selected>Select Class First</option>';
+                return;
+            }
+
+            // AJAX/Fetch call to load sections for Attendance page
+            fetch("sectionDropdown.php?classId=" + classId)
+                .then(response => response.json())
+                .then(data => {
+                    attendanceSectionDropdown.innerHTML = '<option value="All" selected disabled>All Sections</option>';
+
+                    data.forEach(item => {
+                        attendanceSectionDropdown.innerHTML += `
+                            <option value="${item.sec_id}" class="section-option">
+                                ${item.section_name}
+                            </option>
+                        `;
+                    });
+                })
+                .catch(err => console.error("Error fetching attendance sections:", err));
+        });
+    }
+
+    // let modalClassSelect = document.querySelector("#studentModal .selectClass");
+
+    // if (modalClassSelect) {
+
+    //     modalClassSelect.addEventListener('change', function () {
+
+    //         loadSections(this.value);
+    //     });
+
+    // }
+});

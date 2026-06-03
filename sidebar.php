@@ -17,6 +17,7 @@
 
     <!-- custom css -->
     <link href="assests/css/style.css" rel="stylesheet">
+    <link href="assests/css/media-query.css" rel="stylesheet">
 
 
 </head>
@@ -43,7 +44,7 @@
                     </div>
                 </div>
 
-                <div class="nav-item <?= ($currentPage == 'dashboard.php' ? 'active' : '') ?>">
+                <div class="nav-item <?= ($currentPage == 'index.php' ? 'active' : '') ?>">
                     <div><i class="fa fa-house"></i></div>
                     <div><a href="">Dashboard</a></div>
                 </div>
@@ -57,9 +58,9 @@
                     <div><i class="fa fa-school"></i></div>
                     <div><a href="classes.php">Classes</a></div>
                 </div>
-                <div class="nav-item">
+                <div class="nav-item <?= ($currentPage == 'attendance.php' ? 'active' : '') ?>">
                     <div><i class="fa fa-calendar"></i></div>
-                    <div><a href="#">Attendence</a></div>
+                    <div><a href="attendance.php">Attendence</a></div>
                 </div>
                 <div class="nav-item">
                     <div><i class="fa fa-wallet"></i></div>

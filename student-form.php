@@ -68,7 +68,7 @@
 
                     <div class="form-group">
                         <label for="" class="form-label">Class</label>
-                        <select name="sclass" class="form-control" required id="selectClass">
+                        <select name="sclass" class="form-control selectClass">
                             <option value="All" selected disabled>All Classes</option>
                             <?php include "classDropdown.php" ?>
                         </select>
@@ -102,8 +102,8 @@
 
                     <div class="form-group">
                         <label for="" class="form-label">Section</label>
-                        <select name="ssection" class="form-control" required id="sectionDropdown">
-                            <option disabled selected>Select Class First</option>
+                        <select name="ssection" class="form-control sectionDropdown" required>
+                            <option disabled selected value="select-class" class="section-option">Select Class First</option>
                             <?php include "sectionDropdown.php" ?>
                         </select>
                     </div>

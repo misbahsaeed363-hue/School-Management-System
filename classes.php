@@ -224,6 +224,14 @@ include "add_section_modal.php";
                         <i class="fa-solid fa-chevron-down"></i>
                     </div>
 
+                    <!-- SECTION DROPDOWN -->
+                    <div class="dropdowns">
+                        <select name="" class="select-custom sectionDropdown" required>
+                            <option disabled selected>Select Class First</option>
+                            <?php include "sectionDropdown.php" ?>
+                        </select>
+                    </div>
+
                     <div class="">
                         <button class="button">Apply Filters</button>
                     </div>
