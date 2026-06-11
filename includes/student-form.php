@@ -102,7 +102,7 @@
 
                     <div class="form-group">
                         <label for="" class="form-label">Section</label>
-                        <select name="ssection" class="form-control sectionDropdown" required>
+                        <select name="ssection" class="form-control sectionDropdown" id="studentSection" required>
                             <option disabled selected value="select-class" class="section-option">Select Class First</option>
                             <?php include "sectionDropdown.php" ?>
                         </select>

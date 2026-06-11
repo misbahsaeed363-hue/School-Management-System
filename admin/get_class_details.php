@@ -1,6 +1,7 @@
 <?php
 
-include "connection.php";
+// include db
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 $class_id = (int) $_GET['class_id'];
 

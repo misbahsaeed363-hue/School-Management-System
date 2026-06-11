@@ -3,7 +3,8 @@
 // FOR UPDATE STUDENT INFO
 if (isset($_REQUEST['edit'])) {
 
-        include "connection.php";
+        // include db
+        include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
         $id = $_REQUEST['edit'];
 

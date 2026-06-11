@@ -11,8 +11,29 @@ if (isset($_REQUEST['sclass']) && isset($_REQUEST['sec-name']) && isset($_REQUES
     VALUES('$class', '$teacher', '$section', '$capacity')";
     $result = $conn->query($sql);
 
-    header("Location: classes.php");
-    exit();
+    if ($result) {
+
+        session_start();
+        $_SESSION['toast'] = [
+            "type" => "success",
+            "title" => "Section Added",
+            "message" => "Section successfully added to database"
+        ];
+
+        header("Location: classes.php");
+        exit();
+        
+    } else {
+        session_start();
+        $_SESSION['toast'] = [
+            "type" => "error",
+            "title" => "Error",
+            "message" => "Something went wrong"
+        ];
+
+        header("Location: classes.php");
+        exit();
+    }
 }
 ?>
 <!-- ADD SECTION MODAL -->

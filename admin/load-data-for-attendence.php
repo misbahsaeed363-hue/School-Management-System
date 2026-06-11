@@ -1,7 +1,7 @@
 <?php
 
-// include conection
-include "connection.php";
+// include connection
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 // header('Content-Type: application/json');
 

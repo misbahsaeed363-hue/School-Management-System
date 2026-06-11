@@ -85,11 +85,11 @@ document
 let isMarked = false;
 
 // LOAD STUDENTS
-function loadStudents() {
+function loadStudentsAttendence() {
 
     let attendenceDate = document.querySelector("#attendanceDate").value;
     let attendenceClass = document.querySelector("#attendence-class").value;
-    let attendenceSection = document.querySelector("#sectionFilter").value;
+    let attendenceSection = document.querySelector("#desktopSectionFilter").value;
     let markAttendence_btn = document.querySelector("#markAllPresent");
     let saveAttendence = document.querySelector("#saveAttendence");
 

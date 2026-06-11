@@ -2,7 +2,7 @@
 session_start();
 
 // include db
-include_once "connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 

@@ -1,9 +1,9 @@
 <?php
 // include sidebar
-include_once "sidebar.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/sidebar.php";
 
 // include db
-include_once "connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 // <!-- ADD NEW SECTION MODAL -->
 include "add_section_modal.php";
@@ -14,10 +14,20 @@ include "add_section_modal.php";
 
     <!-- topbar -->
     <header class="topbar glass-card">
+
         <div class="topbar-title">
-            <h2>Classes & Sections</h2>
-            <p>Manage academic classes and sections.</p>
+
+            <button id="sidebarCollapseBtn" class="sidebar-toggle-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="header-text">
+                <h2>Classes & Sections</h2>
+                <p>Manage academic classes and sections.</p>
+            </div>
+
         </div>
+
         <div class="topbar-btns">
 
             <button class="btn btn-primary" id="Add_section_btn">
@@ -395,6 +405,6 @@ include "add_section_modal.php";
 </div>
 
 <!-- // include js -->
-<script src="assests/js/script.js"></script>
+<script src="/student_management_system/assets/js/script.js"></script>
 
 </body>

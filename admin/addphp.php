@@ -3,7 +3,7 @@
 session_start();
 
 // connect db
-include "connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 // get values
 $id = $_REQUEST['sid'];
@@ -104,6 +104,13 @@ if (!empty($error)) {
                         WHERE sid='$id'";
 
                         $result2 = $conn->query($sql2);
+
+                        $result = $conn->query("SELECT user_id FROM students WHERE sid='$id'");
+                        $row = $result->fetch_assoc();
+                        $user_id = $row['user_id'];
+
+                        $conn->query("UPDATE users SET email='$email' WHERE id='$user_id'");
+
                         if ($result2) {
 
                                 // session_start();
@@ -143,34 +150,78 @@ if (!empty($error)) {
 
                 move_uploaded_file($tmp_name, $folder);
 
-                $sql = "INSERT INTO students(images, name, age, email, phone, gender, address, section_id, status)
-                VALUES('$folder', '$name', '$age', '$email', '$phone', '$gender', '$address', '$section', '$status')";
+                $plainPassword = "stu" . rand(1000, 9999);
+                $hashedPassword = password_hash($plainPassword, PASSWORD_BCRYPT);
+
+                $userSql = "INSERT INTO users (name, email, password, role)
+                VALUES ('$name', '$email', '$hashedPassword', 'student')";
+
+                $conn->query($userSql);
+
+                $user_id = $conn->insert_id;
+
+                $sql = "INSERT INTO students(
+                images, name, age, email, phone, gender, address, section_id, status, user_id
+                )
+                VALUES(
+                '$folder', '$name', '$age', '$email', '$phone', '$gender', '$address', '$section', '$status', '$user_id'
+                )";
 
                 $result = $conn->query($sql);
 
                 // FOR SHOW TOAST
                 if ($result) {
-
-                        session_start();
+                        // session_start();
                         $_SESSION['toast'] = [
                                 "type" => "success",
                                 "title" => "Student Added",
-                                "message" => "Student successfully added to database"
+                                "message" => "Password: $plainPassword"
                         ];
 
                         header("Location: students.php");
                         exit();
                 } else {
 
-                        session_start();
+                        // session_start();
                         $_SESSION['toast'] = [
                                 "type" => "error",
                                 "title" => "Error",
                                 "message" => "Something went wrong"
                         ];
 
-                        header("Location: index.php");
+                        header("Location: students.php");
                         exit();
                 }
+
+
+                // $sql = "INSERT INTO students(images, name, age, email, phone, gender, address, section_id, status)
+                // VALUES('$folder', '$name', '$age', '$email', '$phone', '$gender', '$address', '$section', '$status')";
+
+                // $result = $conn->query($sql);
+
+                // FOR SHOW TOAST
+                //         if ($result) {
+
+                //                 session_start();
+                //                 $_SESSION['toast'] = [
+                //                         "type" => "success",
+                //                         "title" => "Student Added",
+                //                         "message" => "Student successfully added to database"
+                //                 ];
+
+                //                 header("Location: students.php");
+                //                 exit();
+                //         } else {
+
+                //                 session_start();
+                //                 $_SESSION['toast'] = [
+                //                         "type" => "error",
+                //                         "title" => "Error",
+                //                         "message" => "Something went wrong"
+                //                 ];
+
+                //                 header("Location: index.php");
+                //                 exit();
+                //         }
         }
 }

@@ -2,8 +2,11 @@
 
 session_start();
 
-include_once "sidebar.php";
-include_once "connection.php";
+// include sidebar
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/sidebar.php";
+
+// include connection
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 ?>
 
@@ -13,8 +16,16 @@ include_once "connection.php";
     <header class="topbar glass-card">
 
         <div class="topbar-title">
-            <h2>Attendance Management</h2>
-            <p>Manage daily student attendance records.</p>
+
+            <button id="sidebarCollapseBtn" class="sidebar-toggle-btn">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+
+            <div class="header-text">
+                <h2>Attendance Management</h2>
+                <p>Manage daily student attendance records.</p>
+            </div>
+
         </div>
 
         <div class="topbar-btns">
@@ -70,14 +81,14 @@ include_once "connection.php";
 
             <!-- SECTION DROPDOWN -->
             <div class="dropdowns">
-                <select name="ssection" id="sectionFilter" class="select-custom sectionDropdown" required>
+                <select name="ssection" id="desktopSectionFilter" class="select-custom sectionDropdown" required>
                     <option value="All" selected disabled>Select Class First</option>
                     <?php include "sectionDropdown.php" ?>
                 </select>
                 <i class="fa-solid fa-chevron-down"></i>
             </div>
 
-            <button type="button" class="btn btn-primary" onclick="loadStudents()"><i class="fa-solid fa-rotate"></i> Load Students</button>
+            <button type="button" class="btn btn-primary" onclick="loadStudentsAttendence()"><i class="fa-solid fa-rotate"></i> Load Students</button>
 
         </div>
 
@@ -145,7 +156,7 @@ include_once "connection.php";
 
     <?php
     // confirmation dialogue box
-    include "confirmation-dialogue-box.php"
+    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/confirmation-dialogue-box.php";
     ?>
 
     <!-- TOAST -->
@@ -156,8 +167,8 @@ include_once "connection.php";
 </div>
 
 <!-- // include js -->
-<script src="assests/js/script.js"></script>
-<script src="assests/js/attendance.js"></script>
+<script src="/student_management_system/assets/js/script.js"></script>
+<script src="/student_management_system/assets/js/attendance.js"></script>
 
 
 <?php if (isset($_SESSION['toast'])) { ?>

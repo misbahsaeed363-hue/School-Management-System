@@ -1,0 +1,287 @@
+ @media (max-width: 1024px) {}
+
+
+ /* ==================================
+   TABLET & MOBILE
+================================== */
+
+ @media (max-width: 992px) {
+
+     body {
+         overflow-x: hidden;
+         overflow-y: hidden;
+     }
+
+     .wrapper {
+         height: auto;
+         min-height: 100vh;
+         overflow-y: scroll;
+         overflow-x: hidden;
+         padding: 12px;
+     }
+
+     .sidebar-toggle-btn {
+         display: none;
+     }
+
+     .mobile-header {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 14px 18px;
+         position: fixed;
+         top: 0;
+         left: 0;
+         width: 100%;
+         z-index: 1200;
+         background: rgba(255, 255, 255, .85);
+         backdrop-filter: blur(20px);
+         border-bottom: 1px solid rgba(0, 0, 0, .08);
+     }
+
+     .mobile-logo {
+         display: flex;
+         align-items: center;
+         gap: 10px;
+         font-weight: 800;
+     }
+
+     .mobile-logo i {
+         color: #2563eb;
+     }
+
+     #menuToggle {
+
+         width: 42px;
+
+         height: 42px;
+
+         border: none;
+
+         border-radius: 12px;
+
+         background: white;
+
+         cursor: pointer;
+
+         box-shadow: 0 4px 10px rgba(0, 0, 0, .08);
+     }
+
+     .sidebar {
+
+         position: fixed;
+
+         top: 0;
+
+         left: -320px;
+
+         width: 280px !important;
+
+         height: 100vh;
+
+         z-index: 1300;
+
+         transition: .35s;
+         border-top-left-radius: 0;
+         border-bottom-left-radius: 0;
+
+
+     }
+
+     .sidebar.show {
+         left: 0;
+     }
+
+     .sidebar-overlay {
+
+         display: block;
+
+         position: fixed;
+
+         inset: 0;
+
+         background: rgba(0, 0, 0, .45);
+
+         opacity: 0;
+
+         visibility: hidden;
+
+         transition: .3s;
+
+         z-index: 1250;
+     }
+
+     .sidebar-overlay.show {
+
+         opacity: 1;
+
+         visibility: visible;
+     }
+
+     .main-content {
+
+         /* width: 100%;
+
+        margin-top: 70px; */
+         width: 100%;
+         margin-top: 0;
+         padding-top: 70px;
+         min-height: calc(100vh - 70px);
+         overflow-y: visible;
+         padding-right: 0;
+     }
+
+     .main-content-scrollable {
+         /* overflow: visible; */
+         /* padding-right: 4px; */
+         overflow-y: scroll;
+     }
+
+     .topbar {
+         position: static;
+         /* flex-direction: column;
+        align-items: stretch; */
+         gap: 12px;
+     }
+
+     .topbar-btns {
+         flex-wrap: wrap;
+     }
+
+     /* .btn-group {
+         flex-direction: column;
+         align-items: stretch;
+     } */
+
+     .search-box {
+         width: 213px;
+     }
+
+     /* .search-box {
+         max-width: 100%;
+     } */
+
+     /* .filter-group {
+         flex-direction: column;
+         width: 100%;
+     } */
+
+     .dropdowns,
+     .select-custom {
+         width: 100%;
+     }
+
+     .form-grid {
+         grid-template-columns: 1fr;
+     }
+
+     .form-full {
+         grid-column: span 1;
+     }
+
+     .modal-container.student {
+         flex-direction: column;
+         width: 95%;
+         max-height: 90vh;
+         overflow-y: auto;
+     }
+
+     .left-modal {
+         border-right: none;
+         border-bottom: 1px solid var(--modal-left-border);
+     }
+ }
+
+ @media (max-width: 745px) {
+     .add-btn {
+         display: none;
+     }
+
+     .add-mobile-btn {
+         display: flex;
+     }
+
+     .table-scroll {
+         display: none;
+     }
+
+     .student-cards {
+         display: flex;
+         /* gap: 15px;
+         display: block; */
+     }
+
+ }
+
+ @media (max-width: 670px) {
+
+     .btn-icon {
+         height: 35px;
+         width: 35px;
+         border-radius: var(--radius-small);
+     }
+
+     .mobile-filter-trigger {
+         display: inline-flex;
+     }
+
+     .btn-group .filter-group {
+         display: none;
+     }
+
+ }
+
+ @media (max-width: 650px) {
+
+     .topbar {
+         padding: 9px 15px;
+     }
+
+     .topbar-title h2 {
+         font-size: 16px;
+     }
+
+     .btn {
+         font-size: 10px;
+     }
+ }
+
+ /* SMALL MOBILE */
+
+ @media (max-width: 576px) {
+
+     .wrapper {
+         padding: 8px;
+     }
+
+     /* .topbar-btns {
+         flex-direction: column;
+         width: 100%;
+     } */
+
+     /* .btn {
+         width: 100%;
+         justify-content: center;
+     } */
+
+     /* .btn-icon {
+         width: 100%;
+     } */
+
+     .student-img {
+         width: 40px;
+         height: 40px;
+     }
+
+     .right-modal {
+         padding: 16px;
+     }
+
+     .left-modal {
+         padding: 20px;
+     }
+
+     .toast {
+         width: calc(100vw - 20px);
+     }
+ }

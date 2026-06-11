@@ -1,6 +1,7 @@
 <?php
 
-include "connection.php";
+// include db
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 if (isset($_GET['section_id']) &&  isset($_GET['class_id'])) {
 

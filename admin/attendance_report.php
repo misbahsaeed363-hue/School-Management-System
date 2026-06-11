@@ -3,7 +3,8 @@
 session_start();
 
 include_once "sidebar.php";
-include_once "connection.php";
+// include db
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 ?>
 

@@ -1,7 +1,7 @@
 <?php
 
 // include connection
-include "connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
 
 // TO GET SUBJECT WITH TEACHER NAME
 if (isset($_GET['section_id'])) {
