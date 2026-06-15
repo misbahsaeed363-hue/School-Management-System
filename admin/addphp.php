@@ -193,35 +193,5 @@ if (!empty($error)) {
                         exit();
                 }
 
-
-                // $sql = "INSERT INTO students(images, name, age, email, phone, gender, address, section_id, status)
-                // VALUES('$folder', '$name', '$age', '$email', '$phone', '$gender', '$address', '$section', '$status')";
-
-                // $result = $conn->query($sql);
-
-                // FOR SHOW TOAST
-                //         if ($result) {
-
-                //                 session_start();
-                //                 $_SESSION['toast'] = [
-                //                         "type" => "success",
-                //                         "title" => "Student Added",
-                //                         "message" => "Student successfully added to database"
-                //                 ];
-
-                //                 header("Location: students.php");
-                //                 exit();
-                //         } else {
-
-                //                 session_start();
-                //                 $_SESSION['toast'] = [
-                //                         "type" => "error",
-                //                         "title" => "Error",
-                //                         "message" => "Something went wrong"
-                //                 ];
-
-                //                 header("Location: index.php");
-                //                 exit();
-                //         }
         }
 }

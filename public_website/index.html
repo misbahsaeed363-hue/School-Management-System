@@ -1,0 +1,2749 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Apex International School - Path to Success</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Forum&family=DM+Sans:wght@400;700&display=swap"
+    rel="stylesheet">
+
+  <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <link href="/student_management_system/assets/css/public-website.css" rel="stylesheet">
+
+  <style>
+    /* --- Exact design language and variables from Dashboard style.css --- */
+    :root {
+      --bg-body-gradient: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 50%, #d1d5db 100%);
+      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.6);
+      --primary-gradient: linear-gradient(135deg, #2563eb, #4f46e5);
+      --primary-hover: linear-gradient(135deg, #1d4ed8, #4338ca);
+      --text-dark: #1e293b;
+      --text-muted: #475569;
+      --success-bg: rgba(16, 185, 129, 0.12);
+      --success-text: #10b981;
+      --inactive-bg: rgba(100, 116, 139, 0.12);
+      --inactive-text: #64748b;
+      --accent-glow: rgba(37, 99, 235, 0.15);
+
+      --left-panel-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #2563eb 100%);
+
+      /* Card and input styles */
+      --card-inner-bg: #ffffff;
+      --card-inner-border: rgba(0, 0, 0, 0.05);
+      --modal-bg: rgba(255, 255, 255, 0.9);
+      --modal-border: rgba(255, 255, 255, 0.8);
+      --btn-icon-bg: rgba(255, 255, 255, 0.8);
+      --btn-icon-border: rgba(0, 0, 0, 0.06);
+      --thead-bg: rgba(255, 255, 255, 0.95);
+      --row-border: rgba(0, 0, 0, 0.03);
+      --row-hover: rgba(255, 255, 255, 0.35);
+      --input-bg: rgba(255, 255, 255, 0.7);
+      --input-border: rgba(0, 0, 0, 0.08);
+      --modal-left-bg: rgba(0, 0, 0, 0.02);
+      --modal-left-border: rgba(0, 0, 0, 0.05);
+      --orb-left-bg: rgba(37, 99, 235, 0.15);
+      --orb-right-bg: rgba(16, 185, 129, 0.12);
+
+      /* Border Radius and Shadows */
+      --radius-large: 24px;
+      --radius-medium: 16px;
+      --radius-small: 12px;
+      --glass-shadow: 0 10px 35px rgba(31, 38, 135, 0.08), inset 0 1px 1px rgba(255, 255, 255, 0.8);
+      --modal-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+
+      --gradient-1: linear-gradient(135deg, #10b981, #047857);
+      --gradient-2: linear-gradient(135deg, #f59e0b, #b45309);
+      --gold-accent: #cda45e;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+      background: var(--bg-body-gradient);
+      min-height: 100vh;
+      color: var(--text-dark);
+      overflow-x: hidden;
+      position: relative;
+      transition: background 0.4s ease, color 0.4s ease;
+    }
+
+    body.portal-active {
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* Ambient Background Glowing Orbs */
+    .glowing-orb {
+      position: absolute;
+      width: 35%;
+      height: 60vh;
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(140px);
+    }
+
+    .orb-left {
+      top: -10%;
+      left: -5%;
+      background: var(--orb-left-bg);
+    }
+
+    .orb-right {
+      bottom: -10%;
+      right: -5%;
+      background: var(--orb-right-bg);
+    }
+
+    /* Glass Card Style implemented across portal and website */
+    .glass-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-large);
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      box-shadow: var(--glass-shadow);
+      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease, background 0.3s ease;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(31, 38, 135, 0.12);
+    }
+
+    /* Custom Preloader */
+    .preload {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f172a;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .preload.loaded {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .preload .circle {
+      width: 60px;
+      height: 60px;
+      border: 4px solid rgba(255, 255, 255, 0.1);
+      border-top-color: var(--gold-accent);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      margin-bottom: 20px;
+    }
+
+    .preload .text {
+      color: #fff;
+      font-family: 'Forum', serif;
+      font-size: 24px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* View navigation switch layouts */
+    .view-container {
+      display: none;
+    }
+
+    .view-container.active-view {
+      display: block;
+    }
+
+    .view-container.portal-layout {
+      display: none;
+      width: 100%;
+      height: 100vh;
+      padding: 24px;
+      gap: 24px;
+      z-index: 10;
+      overflow: hidden;
+    }
+
+    .view-container.portal-layout.active-view {
+      display: flex;
+    }
+
+    /* =======================================================
+       PUBLIC WEBSITE DESIGN (DASHBOARD-MATCHED GLASSMORPHISM)
+       ======================================================= */
+    .topbar {
+      background: #0f172a;
+      color: #cbd5e1;
+      padding: 10px 0;
+      font-size: 13px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      z-index: 10;
+      position: relative;
+    }
+
+    .topbar .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .topbar-items-left {
+      display: flex;
+      gap: 20px;
+    }
+
+    .topbar-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .topbar-item ion-icon {
+      color: var(--gold-accent);
+      font-size: 16px;
+    }
+
+    .topbar-link {
+      color: inherit;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .topbar-link:hover {
+      color: var(--gold-accent);
+    }
+
+    /* Premium Header Navigation bar */
+    .web-header {
+      background: rgba(15, 23, 42, 0.9);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      padding: 15px 0;
+    }
+
+    .web-header .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: #fff;
+    }
+
+    .logo-container i {
+      font-size: 32px;
+      color: var(--gold-accent);
+    }
+
+    .logo-container h1 {
+      font-family: 'Forum', serif;
+      font-size: 26px;
+      letter-spacing: 1px;
+    }
+
+    .logo-container span {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--gold-accent);
+    }
+
+    .web-nav {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .web-nav-list {
+      display: flex;
+      list-style: none;
+      gap: 24px;
+    }
+
+    .web-nav-link {
+      color: #e2e8f0;
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: 1px;
+      position: relative;
+      padding: 6px 0;
+      transition: color 0.3s;
+      text-decoration: none;
+    }
+
+    .web-nav-link:hover,
+    .web-nav-link.active {
+      color: var(--gold-accent);
+    }
+
+    .web-nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gold-accent);
+      transition: width 0.3s ease;
+    }
+
+    .web-nav-link:hover::after,
+    .web-nav-link.active::after {
+      width: 100%;
+    }
+
+    /* Premium Dual Action Gold Button */
+    .btn-gold {
+      background: transparent;
+      color: var(--gold-accent);
+      border: 2px solid var(--gold-accent);
+      padding: 10px 22px;
+      font-family: 'Forum', serif;
+      font-size: 15px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      cursor: pointer;
+      border-radius: var(--radius-small);
+      transition: all 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-gold:hover {
+      background: var(--gold-accent);
+      color: #0f172a;
+      box-shadow: 0 4px 15px rgba(205, 164, 94, 0.3);
+    }
+
+    /* Hero Banner layout */
+    .hero-section {
+      position: relative;
+      height: calc(100vh - 120px);
+      min-height: 650px;
+      background: #090d16;
+      overflow: hidden;
+    }
+
+    .hero-slider {
+      height: 100%;
+      position: relative;
+    }
+
+    .hero-slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      z-index: 1;
+      transition: opacity 1s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .slide-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      filter: brightness(0.35);
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 3;
+      text-align: center;
+      color: #fff;
+      max-width: 900px;
+      padding: 20px;
+    }
+
+    .slide-subtitle {
+      font-family: 'Forum', serif;
+      color: var(--gold-accent);
+      font-size: 22px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      margin-bottom: 15px;
+    }
+
+    .slide-title {
+      font-family: 'Forum', serif;
+      font-size: 58px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: 20px;
+    }
+
+    .slide-text {
+      font-size: 18px;
+      color: #cbd5e1;
+      margin-bottom: 35px;
+      line-height: 1.8;
+    }
+
+    /* Floating Stats Cards Over Hero Section */
+    .hero-floating-cards {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 20px;
+      z-index: 10;
+      width: 90%;
+      max-width: 1100px;
+      justify-content: center;
+    }
+
+    .floating-glass-card {
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: var(--radius-medium);
+      padding: 16px 24px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      animation: floatEffect 4s ease-in-out infinite alternate;
+    }
+
+    .floating-glass-card:nth-child(2) {
+      animation-delay: 1s;
+    }
+
+    .floating-glass-card:nth-child(3) {
+      animation-delay: 2s;
+    }
+
+    .floating-glass-card i {
+      font-size: 28px;
+      color: var(--gold-accent);
+    }
+
+    .floating-card-info h4 {
+      font-size: 18px;
+      font-weight: 800;
+    }
+
+    .floating-card-info p {
+      font-size: 12px;
+      color: #e2e8f0;
+    }
+
+    @keyframes floatEffect {
+      0% {
+        transform: translateY(0px);
+      }
+
+      100% {
+        transform: translateY(-10px);
+      }
+    }
+
+    /* Control Slide Buttons */
+    .slider-control-btn {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 50px;
+      height: 50px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 10;
+      transition: all 0.3s;
+    }
+
+    .slider-control-btn:hover {
+      background: var(--gold-accent);
+      color: #000;
+    }
+
+    .slider-control-btn.prev {
+      left: 20px;
+    }
+
+    .slider-control-btn.next {
+      right: 20px;
+    }
+
+    /* Quick Access Cards ($3 x 2 Grid) matching Dashboard theme */
+    .quick-access-section {
+      padding: 60px 0;
+      margin-top: -20px;
+      position: relative;
+      z-index: 20;
+    }
+
+    .quick-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+    }
+
+    .quick-card {
+      padding: 30px;
+      text-align: center;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .quick-card-icon {
+      width: 60px;
+      height: 60px;
+      border-radius: var(--radius-small);
+      background: var(--primary-gradient);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin: 0 auto 16px;
+    }
+
+    .quick-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 10px;
+      color: var(--text-dark);
+    }
+
+    .quick-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Section Spacing standards */
+    .section-padding {
+      padding: 80px 0;
+      position: relative;
+      z-index: 1;
+    }
+
+    .section-title-wrapper {
+      text-align: center;
+      max-width: 800px;
+      margin: 0 auto 50px;
+    }
+
+    .subtitle-accent {
+      color: #2563eb;
+      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 2px;
+      margin-bottom: 10px;
+      display: inline-block;
+    }
+
+    .main-section-title {
+      font-family: 'Forum', serif;
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--text-dark);
+      margin-bottom: 15px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    .container-wide {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* Principal's Message layout */
+    .principal-section {
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(20px);
+    }
+
+    .principal-grid {
+      display: grid;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 50px;
+      align-items: center;
+    }
+
+    .principal-img-container {
+      border-radius: var(--radius-large);
+      overflow: hidden;
+      border: 4px solid #fff;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .principal-img-container img {
+      width: 100%;
+      height: auto;
+      display: block;
+      transition: transform 0.5s ease;
+    }
+
+    .principal-img-container:hover img {
+      transform: scale(1.05);
+    }
+
+    .principal-text {
+      text-align: left;
+    }
+
+    .principal-name {
+      font-family: 'Forum', serif;
+      font-size: 28px;
+      color: var(--text-dark);
+      margin-bottom: 5px;
+    }
+
+    .principal-title {
+      font-size: 14px;
+      color: var(--gold-accent);
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .principal-quote {
+      font-size: 15px;
+      color: var(--text-muted);
+      line-height: 1.8;
+      margin-bottom: 25px;
+      font-style: italic;
+    }
+
+    /* Faculty section matching with new standard layout styles */
+    .faculty-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+
+    .faculty-card {
+      text-align: center;
+      padding: 24px;
+    }
+
+    .faculty-img-wrapper {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      overflow: hidden;
+      margin: 0 auto 16px;
+      border: 3px solid #fff;
+      box-shadow: var(--glass-shadow);
+      transition: transform 0.3s ease;
+    }
+
+    .faculty-card:hover .faculty-img-wrapper {
+      transform: scale(1.1) rotate(5deg);
+    }
+
+    .faculty-img-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .faculty-card h3 {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text-dark);
+      margin-bottom: 4px;
+    }
+
+    .faculty-card p.subject {
+      color: #2563eb;
+      font-size: 13px;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .faculty-card p.exp {
+      font-size: 11px;
+      color: var(--text-muted);
+    }
+
+    /* Premium Image Gallery hover zoom transitions */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: var(--radius-large);
+      overflow: hidden;
+      height: 250px;
+      box-shadow: var(--glass-shadow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(15, 23, 42, 0.9), transparent);
+      opacity: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 24px;
+      transition: opacity 0.3s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.12);
+    }
+
+    .gallery-item:hover .gallery-overlay {
+      opacity: 1;
+    }
+
+    .gallery-overlay h4 {
+      color: #fff;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 4px;
+    }
+
+    .gallery-overlay p {
+      color: var(--gold-accent);
+      font-size: 12px;
+    }
+
+    /* Why Choose Us Grid */
+    .why-choose-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+
+    .why-card {
+      padding: 30px;
+      display: flex;
+      gap: 16px;
+    }
+
+    .why-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: var(--radius-small);
+      background: rgba(37, 99, 235, 0.1);
+      color: #2563eb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+      flex-shrink: 0;
+    }
+
+    .why-info h4 {
+      font-size: 16px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 8px;
+    }
+
+    .why-info p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    /* Parent reviews Carousel setup */
+    .testimonial-slider-container {
+      max-width: 800px;
+      margin: 0 auto;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .testimonial-slide {
+      display: none;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .testimonial-slide.active {
+      display: block;
+      animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .stars {
+      color: #f59e0b;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    .testi-quote {
+      font-size: 18px;
+      color: var(--text-dark);
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .parent-name {
+      font-weight: 800;
+      color: #2563eb;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Admissions & Enquiry Form style */
+    .admission-form-section {
+      background: #0f172a;
+      color: #fff;
+      border-radius: var(--radius-large);
+      margin: 40px auto;
+      padding: 50px;
+      max-width: 1100px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .admission-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 50px;
+    }
+
+    .admission-text h3 {
+      font-family: 'Forum', serif;
+      font-size: 38px;
+      color: var(--gold-accent);
+      margin-bottom: 15px;
+    }
+
+    .admission-text p {
+      color: #94a3b8;
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .admission-form {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .input-field-school {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: #fff;
+      padding: 12px 18px;
+      border-radius: var(--radius-small);
+      font-size: 14px;
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .input-field-school:focus {
+      border-color: var(--gold-accent);
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .input-field-school::placeholder {
+      color: #64748b;
+    }
+
+    /* Premium Wide Footer */
+    .web-footer {
+      background: #090d16;
+      color: #94a3b8;
+      padding: 80px 0 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr 0.8fr 1.2fr;
+      gap: 40px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 40px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .footer-brand-title {
+      font-family: 'Forum', serif;
+      color: #fff;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .footer-col h4 {
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .footer-links {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .footer-links a {
+      color: #94a3b8;
+      text-decoration: none;
+      font-size: 14px;
+      transition: color 0.3s;
+    }
+
+    .footer-links a:hover {
+      color: var(--gold-accent);
+    }
+
+    .copyright-bar {
+      text-align: center;
+      padding-top: 20px;
+      font-size: 13px;
+      color: #64748b;
+    }
+
+    .footer-socials {
+      display: flex;
+      gap: 14px;
+      font-size: 18px;
+      margin-top: 16px;
+    }
+
+    .footer-socials a {
+      color: #94a3b8;
+      transition: color 0.3s;
+    }
+
+    .footer-socials a:hover {
+      color: var(--gold-accent);
+    }
+
+    /* =======================================================
+       PORTAL DASHBOARD SIDEBAR AND CONTAINER LAYOUTS
+       ======================================================= */
+    .sidebar {
+      width: 280px;
+      flex-shrink: 0;
+      padding: 24px;
+      height: calc(100vh - 48px);
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 40px;
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-medium);
+      background: var(--primary-gradient);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 20px;
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+    }
+
+    .brand-name {
+      font-size: 18px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 18px;
+      margin-bottom: 6px;
+      border-radius: var(--radius-medium);
+      text-decoration: none;
+      color: var(--text-muted);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .nav-item:hover {
+      background: rgba(255, 255, 255, 0.5);
+      color: var(--text-dark);
+    }
+
+    .nav-item.active {
+      background: var(--primary-gradient);
+      color: #fff;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.15);
+    }
+
+    .sidebar-footer {
+      margin-top: auto;
+    }
+
+    /* Portal Main content */
+    .main-content {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .topbar-portal {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(25px);
+      -webkit-backdrop-filter: blur(25px);
+      padding: 12px 18px;
+      margin-bottom: 15px;
+    }
+
+    .topbar-title h2 {
+      font-size: 20px;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    .topbar-title p {
+      font-size: 11px;
+      margin-top: 3px;
+      color: var(--text-muted);
+    }
+
+    .topbar-btns {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    /* Metrics panel indicators */
+    .metrics-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-bottom: 15px;
+    }
+
+    .metrics-card {
+      background: var(--glass-bg);
+      border: 1px solid var(--glass-border);
+      border-radius: var(--radius-medium);
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      box-shadow: var(--glass-shadow);
+      padding: 14px 18px;
+    }
+
+    .metrics-icon {
+      border-radius: var(--radius-small);
+      background: var(--primary-gradient);
+      color: #fff;
+      display: grid;
+      place-content: center;
+      width: 44px;
+      height: 44px;
+      font-size: 16px;
+    }
+
+    .metrics-info h4 {
+      font-size: 11px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .metrics-info p {
+      font-weight: 800;
+      font-size: 20px;
+    }
+
+    /* Classes layout charts */
+    .classes-card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .class-card {
+      background: var(--card-inner-bg);
+      border: 1px solid var(--card-inner-border);
+      border-left: 5px solid #2563eb;
+      border-radius: var(--radius-medium);
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.02);
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    .class-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .class-card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .class-card-name {
+      font-size: 18px;
+      font-weight: 800;
+      color: var(--text-dark);
+    }
+
+    .class-card-room {
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(0, 0, 0, 0.05);
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-weight: 700;
+    }
+
+    .card-teacher-box {
+      background: rgba(128, 128, 128, 0.03);
+      border-radius: var(--radius-small);
+      padding: 8px 10px;
+      border: 1px solid var(--row-border);
+    }
+
+    .teacher-box-label {
+      font-size: 9px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.3px;
+    }
+
+    .class-teacher {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .class-card-progress {
+      margin-top: 2px;
+    }
+
+    .card-progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .card-progress-track {
+      height: 6px;
+      background: var(--input-bg);
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid var(--input-border);
+    }
+
+    .card-progress-fill {
+      height: 100%;
+      background: var(--primary-gradient);
+      border-radius: 999px;
+      width: 80%;
+      transition: width 0.8s ease;
+    }
+
+    /* Filters Bar style matching Dashboard perfectly */
+    .filter-bar {
+      padding: 12px 18px;
+      margin-bottom: 15px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      background: rgba(255, 255, 255, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 18px;
+    }
+
+    .search-box {
+      position: relative;
+      flex-grow: 1;
+      max-width: 320px;
+    }
+
+    .search-box input {
+      width: 100%;
+      height: 40px;
+      padding: 0 16px 0 40px;
+      border-radius: var(--radius-medium);
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      color: var(--text-dark);
+      font-size: 12px;
+      outline: none;
+      transition: all 0.2s;
+    }
+
+    .search-box input:focus {
+      background: var(--card-inner-bg);
+      border-color: #2563eb;
+      box-shadow: 0 0 12px var(--accent-glow);
+    }
+
+    .search-box i {
+      position: absolute;
+      left: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 13px;
+    }
+
+    .filter-group {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .select-custom {
+      height: 40px;
+      padding: 0 30px 0 14px;
+      border-radius: var(--radius-medium);
+      border: 1px solid var(--input-border);
+      background: var(--input-bg);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-dark);
+      outline: none;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+      transition: all 0.2s;
+    }
+
+    .select-custom:focus {
+      background: var(--card-inner-bg);
+      border-color: #2563eb;
+    }
+
+    .dropdowns {
+      position: relative;
+    }
+
+    .dropdowns i {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      pointer-events: none;
+      font-size: 10px;
+    }
+
+    /* Dynamic table styles */
+    .student-record {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .table-scroll {
+      overflow-x: auto;
+      flex-grow: 1;
+      max-height: 480px;
+    }
+
+    table {
+      width: 100%;
+      min-width: 1000px;
+      border-collapse: separate;
+      border-spacing: 0 10px;
+    }
+
+    thead tr {
+      position: sticky;
+      top: 0;
+      background: var(--thead-bg);
+      border-bottom: 1px solid var(--row-border);
+      z-index: 10;
+    }
+
+    th {
+      padding: 10px 18px;
+      font-size: 11px;
+      text-transform: uppercase;
+      font-weight: 800;
+      color: var(--text-muted);
+      letter-spacing: 0.5px;
+    }
+
+    tbody tr {
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(10px);
+      transition: all 0.2s;
+    }
+
+    tbody tr:hover {
+      background: rgba(255, 255, 255, 0.95);
+      color: var(--text-dark);
+    }
+
+    tbody td:first-child {
+      border-radius: var(--radius-small) 0 0 var(--radius-small);
+    }
+
+    tbody td:last-child {
+      border-radius: 0 var(--radius-small) var(--radius-small) 0;
+    }
+
+    td {
+      padding: 10px 18px;
+      font-size: 13px;
+      vertical-align: middle;
+    }
+
+    .student-img {
+      width: 44px;
+      height: 44px;
+      border-radius: var(--radius-small);
+      border: 1px solid var(--glass-border);
+      object-fit: cover;
+    }
+
+    /* Attendance indicators */
+    .status-badge {
+      padding: 5px 12px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 700;
+      display: inline-block;
+    }
+
+    .status-badge.present {
+      background: rgba(16, 185, 129, 0.12);
+      color: #10b981;
+    }
+
+    .status-badge.absent {
+      background: rgba(239, 68, 68, 0.12);
+      color: #ef4444;
+    }
+
+    /* Actions configuration */
+    .btns-action {
+      display: flex;
+      gap: 6px;
+    }
+
+    .btn-action {
+      width: 32px;
+      height: 32px;
+      border: none;
+      border-radius: var(--radius-small);
+      display: inline-flex;
+      background: rgba(128, 128, 128, 0.1);
+      cursor: pointer;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-action.edit {
+      color: #2563eb;
+    }
+
+    .btn-action.edit:hover {
+      background-color: #2563eb;
+      color: #fff;
+    }
+
+    .btn-action.delete {
+      color: #ef4444;
+    }
+
+    .btn-action.delete:hover {
+      background-color: #ef4444;
+      color: #fff;
+    }
+
+    /* Inline attendance controller */
+    .status-selector {
+      display: inline-flex;
+      gap: 4px;
+      background: rgba(128, 128, 128, 0.08);
+      padding: 3px;
+      border-radius: var(--radius-small);
+      border: 1px solid var(--input-border);
+    }
+
+    .status-btn-opt {
+      padding: 3px 8px;
+      font-size: 11px;
+      font-weight: 700;
+      cursor: pointer;
+      border-radius: 6px;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      transition: all 0.2s;
+    }
+
+    .status-btn-opt.active-P {
+      background: #10b981;
+      color: white;
+    }
+
+    .status-btn-opt.active-A {
+      background: #ef4444;
+      color: white;
+    }
+
+    .status-btn-opt.active-L {
+      background: #f59e0b;
+      color: white;
+    }
+
+    .status-btn-opt.active-LV {
+      background: #3b82f6;
+      color: white;
+    }
+
+    /* Modern Login Container matching standard responsive panels */
+    .login-modal-container {
+      width: 90vw !important;
+      max-width: 950px !important;
+      height: 80vh !important;
+      max-height: 600px !important;
+      background: var(--modal-bg);
+      border: 1px solid var(--modal-border);
+      border-radius: var(--radius-large) !important;
+      box-shadow: var(--modal-shadow);
+      display: flex !important;
+      flex-direction: row !important;
+      overflow: hidden !important;
+    }
+
+    /* Left panel styling */
+    .login-split-left {
+      flex: 1.1;
+      background: var(--left-panel-gradient);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: #ffffff;
+    }
+
+    .login-split-left .glowing-orb {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
+      pointer-events: none;
+      filter: blur(80px);
+      z-index: 1;
+      opacity: 0.6;
+    }
+
+    .left-logo-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 5;
+    }
+
+    .left-logo-icon {
+      width: 50px;
+      height: 50px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      backdrop-filter: blur(15px);
+    }
+
+    .left-logo-title {
+      font-size: 22px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .left-welcome-text {
+      margin-top: 20px;
+      margin-bottom: 20px;
+      z-index: 5;
+    }
+
+    .left-welcome-text h2 {
+      font-size: 32px;
+      font-weight: 800;
+      line-height: 1.25;
+      margin-bottom: 12px;
+      color: #fff;
+    }
+
+    .left-welcome-text p {
+      font-size: 14px;
+      line-height: 1.6;
+      opacity: 0.85;
+      color: #f1f5f9;
+    }
+
+    .left-footer {
+      font-size: 11px;
+      color: rgba(255, 255, 255, 0.6);
+      z-index: 5;
+    }
+
+    /* Abstract shapes canvas in left side panel */
+    .artistic-canvas {
+      position: relative;
+      flex-grow: 1;
+      min-height: 150px;
+      width: 100%;
+      z-index: 2;
+    }
+
+    .art-shape {
+      position: absolute;
+      opacity: 0.15;
+      transition: all 0.5s ease;
+    }
+
+    .art-blob-1 {
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(45deg, #a78bfa, #ec4899);
+      border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%;
+      top: 10px;
+      left: 10px;
+    }
+
+    .art-blob-2 {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(-45deg, #3b82f6, #06b6d4);
+      border-radius: 50% 50% 30% 70% / 50% 60% 40% 50%;
+      bottom: 10px;
+      right: 10px;
+    }
+
+    /* Right panel styling */
+    .login-split-right {
+      flex: 0.9;
+      background: #ffffff;
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .login-title-area {
+      margin-bottom: 30px;
+    }
+
+    .login-title-area h3 {
+      font-size: 24px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 6px;
+    }
+
+    .login-title-area p {
+      font-size: 13px;
+      color: var(--text-muted);
+    }
+
+    .form-group-custom {
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .form-group-custom label {
+      display: block;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .input-wrapper-icon {
+      position: relative;
+    }
+
+    .input-wrapper-icon input {
+      width: 100%;
+      height: 46px;
+      padding: 0 16px 0 44px;
+      border-radius: var(--radius-small);
+      border: 1px solid var(--input-border);
+      background: #f8fafc;
+      font-size: 14px;
+      color: var(--text-dark);
+      outline: none;
+      transition: all 0.3s;
+    }
+
+    .input-wrapper-icon input:focus {
+      background: #ffffff;
+      border-color: #4f46e5;
+      box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1);
+    }
+
+    .input-wrapper-icon i {
+      position: absolute;
+      left: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-muted);
+      font-size: 15px;
+    }
+
+    .btn-login-submit {
+      width: 100%;
+      height: 46px;
+      background: var(--primary-gradient);
+      color: #ffffff;
+      border: none;
+      border-radius: var(--radius-small);
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+      transition: all 0.3s;
+      margin-top: 10px;
+    }
+
+    .btn-login-submit:hover {
+      background: var(--primary-hover);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 16px rgba(79, 70, 229, 0.35);
+    }
+
+    /* Notification Toasts Styles */
+    .toast-container {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      z-index: 99999;
+    }
+
+    .toast {
+      background: rgba(255, 255, 255, 0.85);
+      backdrop-filter: blur(15px);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      padding: 16px 20px;
+      border-radius: var(--radius-medium);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      min-width: 320px;
+      max-width: 400px;
+      transform: translateX(120%);
+      transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .toast.show {
+      transform: translateX(0);
+    }
+
+    .toast-icon {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 14px;
+      flex-shrink: 0;
+    }
+
+    .toast-success .toast-icon {
+      background: #10b981;
+    }
+
+    .toast-info .toast-icon {
+      background: #3b82f6;
+    }
+
+    .toast-error .toast-icon {
+      background: #ef4444;
+    }
+
+    .toast-content {
+      flex-grow: 1;
+    }
+
+    .toast-title {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text-dark);
+      margin-bottom: 2px;
+    }
+
+    .toast-msg {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* Modal Framework Overlays */
+    .modal-overlay-framework {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.3);
+      backdrop-filter: blur(8px);
+      z-index: 9999;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .modal-overlay-framework.active-modal {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .modal-close-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 36px;
+      height: 36px;
+      background: #f1f5f9;
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-muted);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .modal-close-btn:hover {
+      background: #e2e8f0;
+      color: var(--text-dark);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="glowing-orb orb-left"></div>
+  <div class="glowing-orb orb-right"></div>
+
+  <div class="preload" id="preloader">
+    <div class="circle"></div>
+    <div class="text">Apex International</div>
+  </div>
+
+  <div id="websiteView" class="view-container active-view">
+
+    <div class="topbar">
+      <div class="container">
+        <div class="topbar-items-left">
+          <div class="topbar-item">
+            <ion-icon name="call-outline"></ion-icon>
+            <a href="tel:+18002345678" class="topbar-link">+1 (800) 234-5678</a>
+          </div>
+          <div class="topbar-item">
+            <ion-icon name="mail-outline"></ion-icon>
+            <a href="mailto:info@apexinternational.edu" class="topbar-link">info@apexinternational.edu</a>
+          </div>
+        </div>
+        <div class="topbar-items-right">
+          <div class="topbar-item">
+            <ion-icon name="location-outline"></ion-icon>
+            <span>Main Institutional Campus, Academic Block, Phase 1</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <header class="web-header">
+      <div class="container">
+        <div class="logo-container">
+          <i class="fa-solid fa-graduation-cap"></i>
+          <div>
+            <h1>APEX INT.</h1>
+            <span>Path to Success</span>
+          </div>
+        </div>
+        <nav class="web-nav">
+          <ul class="web-nav-list">
+            <li><a href="#" class="web-nav-link active">Home</a></li>
+            <li><a href="#about" class="web-nav-link">About Us</a></li>
+            <li><a href="#faculty" class="web-nav-link">Faculty</a></li>
+            <li><a href="#gallery" class="web-nav-link">Gallery</a></li>
+            <li><a href="#admissions" class="web-nav-link">Admissions</a></li>
+          </ul>
+          <button class="btn-gold" onclick="openLoginModal()">
+            <i class="fa-solid fa-shield-halved"></i> Portal Login
+          </button>
+        </nav>
+      </div>
+    </header>
+
+    <section class="hero-section">
+      <div class="hero-slider">
+
+        <div class="hero-slide active">
+          <div class="slide-bg"
+            style="background-image: url('https://images.unsplash.com/photo-1523050854058-8df90110c9f1?q=80&w=1920&auto=format&fit=cover');">
+          </div>
+          <div class="slide-content">
+            <p class="slide-subtitle">Welcome to Apex International School</p>
+            <h2 class="slide-title">Empowering the Future Leaders of Tomorrow</h2>
+            <p class="slide-text">We are providing global standard learning methodology and world-class educational
+              infrastructure for comprehensive excellence.</p>
+            <a href="#admissions" class="btn-gold"><i class="fa-solid fa-file-signature"></i> Apply Now</a>
+          </div>
+        </div>
+
+        <div class="hero-slide">
+          <div class="slide-bg"
+            style="background-image: url('https://images.unsplash.com/photo-1546410531-bb4caa6b424d?q=80&w=1920&auto=format&fit=cover');">
+          </div>
+          <div class="slide-content">
+            <p class="slide-subtitle">Advanced Science & Tech Labs</p>
+            <h2 class="slide-title">Innovation Rooted in Modern Research</h2>
+            <p class="slide-text">Fostering analytical mindset, practical learning procedures, and advanced tech
+              specialization courses for students.</p>
+            <a href="#about" class="btn-gold"><i class="fa-solid fa-compass"></i> Explore Campus</a>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="hero-floating-cards">
+        <div class="floating-glass-card">
+          <i class="fa-solid fa-award"></i>
+          <div class="floating-card-info">
+            <h4>Ranked #1</h4>
+            <p>Best Academic Infrastructure</p>
+          </div>
+        </div>
+        <div class="floating-glass-card">
+          <i class="fa-solid fa-user-astronaut"></i>
+          <div class="floating-card-info">
+            <h4>Tech Driven</h4>
+            <p>AI & Robotic Labs Embedded</p>
+          </div>
+        </div>
+        <div class="floating-glass-card">
+          <i class="fa-solid fa-globe"></i>
+          <div class="floating-card-info">
+            <h4>100% Placement</h4>
+            <p>Global University Track</p>
+          </div>
+        </div>
+      </div>
+
+      <button class="slider-control-btn prev" onclick="moveSlide(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="slider-control-btn next" onclick="moveSlide(1)"><i class="fa-solid fa-chevron-right"></i></button>
+    </section>
+
+    <section class="quick-access-section container-wide">
+      <div class="quick-grid">
+        <div class="glass-card quick-card">
+          <div class="quick-card-icon"><i class="fa-solid fa-laptop-code"></i></div>
+          <h3>Smart Classrooms</h3>
+          <p>Fully air-conditioned interactive smart projection systems designed for deep immersive knowledge delivery.
+          </p>
+        </div>
+        <div class="glass-card quick-card">
+          <div class="quick-card-icon" style="background: var(--gradient-1);"><i class="fa-solid fa-flask-vial"></i>
+          </div>
+          <h3>Advanced Science Labs</h3>
+          <p>Modern experimental equipment supporting practical application research matching global criteria standards.
+          </p>
+        </div>
+        <div class="glass-card quick-card">
+          <div class="quick-card-icon" style="background: var(--gradient-2);"><i class="fa-solid fa-dumbbell"></i></div>
+          <h3>Olympic Sports Hub</h3>
+          <p>Professional fields for football, basketball courts, swimming pool facilities with expert dedicated
+            trainers.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section-padding principal-section">
+      <div class="container-wide principal-grid">
+        <div class="principal-img-container">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=600&auto=format&fit=cover"
+            alt="Principal Desk">
+        </div>
+        <div class="principal-text">
+          <span class="subtitle-accent">Leadership Insights</span>
+          <h2 class="main-section-title">From the Principal's Desk</h2>
+          <p class="principal-title">Dr. Elizabeth Vance (Ph.D. Academic Management, Harvard)</p>
+          <p class="principal-quote">
+            "At Apex International, we don't just focus on standard textbook education; our ultimate structural
+            objective is foundational character building, analytical thinking development, and psychological emotional
+            progression. Every child holds infinite creative talent, and our world-class faculty creates the perfect
+            medium to make that potential shine bright globally. Welcome to our elite educational ecosystem."
+          </p>
+          <button class="btn-gold"><i class="fa-solid fa-file-lines"></i> Read Full Message</button>
+        </div>
+      </div>
+    </section>
+
+    <section id="faculty" class="section-padding container-wide">
+      <div class="section-title-wrapper">
+        <span class="subtitle-accent">Our Educators</span>
+        <h2 class="main-section-title">Meet Our Elite World-Class Faculty</h2>
+        <p class="section-desc">Highly qualified professors and subject research specialists dedicated to providing
+          top-tier academic development for every child.</p>
+      </div>
+      <div class="faculty-grid">
+
+        <div class="glass-card faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=300&auto=format&fit=cover"
+              alt="Faculty">
+          </div>
+          <h3>Prof. Sarah Jenkins</h3>
+          <p class="subject">Advanced Physics & Math</p>
+          <p class="exp">12+ Years Experience (Ex-MIT Fellow)</p>
+        </div>
+
+        <div class="glass-card faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=300&auto=format&fit=cover"
+              alt="Faculty">
+          </div>
+          <h3>Dr. Robert Chen</h3>
+          <p class="subject">AI & Computer Engineering</p>
+          <p class="exp">9+ Years Experience (Ph.D. Stanford)</p>
+        </div>
+
+        <div class="glass-card faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=300&auto=format&fit=cover"
+              alt="Faculty">
+          </div>
+          <h3>Maria Rodriguez</h3>
+          <p class="subject">English Literature & Arts</p>
+          <p class="exp">15+ Years Experience (Oxford Graduate)</p>
+        </div>
+
+        <div class="glass-card faculty-card">
+          <div class="faculty-img-wrapper">
+            <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=300&auto=format&fit=cover"
+              alt="Faculty">
+          </div>
+          <h3>James Anderson</h3>
+          <p class="subject">Advanced Chemical Research</p>
+          <p class="exp">10+ Years Experience (Cambridge Alumnus)</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="gallery" class="section-padding" style="background: rgba(255,255,255,0.2);">
+      <div class="container-wide">
+        <div class="section-title-wrapper">
+          <span class="subtitle-accent">Visual Tour</span>
+          <h2 class="main-section-title">Our Premium Campus Gallery</h2>
+          <p class="section-desc">A glimpse into our advanced infrastructure, dynamic labs, and joyful student
+            activities.</p>
+        </div>
+        <div class="gallery-grid">
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1497633762265-9d179a990aa6?q=80&w=600&auto=format&fit=cover"
+              alt="Gallery">
+            <div class="gallery-overlay">
+              <h4>Modern Digital Library</h4>
+              <p>Over 50,000 global books and electronic journals access.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=600&auto=format&fit=cover"
+              alt="Gallery">
+            <div class="gallery-overlay">
+              <h4>Advanced Robotics Tech Lab</h4>
+              <p>Students designing next-gen automated tech modules.</p>
+            </div>
+          </div>
+          <div class="gallery-item">
+            <img src="https://images.unsplash.com/photo-1588072432836-e10032774350?q=80&w=600&auto=format&fit=cover"
+              alt="Gallery">
+            <div class="gallery-overlay">
+              <h4>Primary Wing Creativity Zone</h4>
+              <p>Safe, colorfully interactive space designed for young beginners.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-padding container-wide">
+      <div class="section-title-wrapper">
+        <span class="subtitle-accent">Testimonials</span>
+        <h2 class="main-section-title">What Elite Parents Say About Us</h2>
+      </div>
+      <div class="glass-card testimonial-slider-container">
+
+        <div class="testimonial-slide active">
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="testi-quote">"The transformation in my daughter's logical mindset after joining Apex is truly
+            incredible. The portal system is highly responsive, and the advanced learning infrastructure matches
+            international standards completely."</p>
+          <p class="parent-name">- Marcus Sterling (Entrepreneur)</p>
+        </div>
+
+        <div class="testimonial-slide">
+          <div class="stars"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i
+              class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+          <p class="testi-quote">"The quality of the teaching faculty is phenomenal. Individual student attention
+            profile trackers and robotic courses offer a premium edge that no other standard institutional center can
+            match."</p>
+          <p class="parent-name">- Helena Vance (Senior Tech Architect)</p>
+        </div>
+
+      </div>
+    </section>
+
+    <section id="admissions" class="admission-form-section">
+      <div class="admission-grid">
+        <div class="admission-text">
+          <h3>Enroll Your Child for the Next Academic Session</h3>
+          <p style="margin-bottom: 20px;">Seats are highly limited for standard batch intakes. Fill out the formal
+            digital document sheet completely, and our admission coordination team will contact your family within 24
+            operational hours.</p>
+          <ul style="list-style: none; display: flex; flex-direction: column; gap: 12px; color: #cbd5e1;">
+            <li><i class="fa-solid fa-circle-check" style="color: var(--gold-accent); margin-right: 8px;"></i> Global
+              Curriculum Alignment Map</li>
+            <li><i class="fa-solid fa-circle-check" style="color: var(--gold-accent); margin-right: 8px;"></i>
+              Personalized Transport Tracking Setup</li>
+            <li><i class="fa-solid fa-circle-check" style="color: var(--gold-accent); margin-right: 8px;"></i> Elite
+              Merit Scholarship Opportunities Available</li>
+          </ul>
+        </div>
+        <div>
+          <form class="admission-form"
+            onsubmit="event.preventDefault(); showToast('Form Submitted', 'Thank you! Our admission team will contact you soon.', 'success');">
+            <input type="text" class="input-field-school" placeholder="Parent's Complete Name" required>
+            <input type="email" class="input-field-school" placeholder="Valid Email Address" required>
+            <input type="tel" class="input-field-school" placeholder="Primary Contact Mobile Number" required>
+            <select class="input-field-school" style="color: #64748b;" required>
+              <option value="" disabled selected>Select Intended Grade Class</option>
+              <option value="primary">Primary Section (Grade 1-5)</option>
+              <option value="middle">Middle School (Grade 6-8)</option>
+              <option value="high">High School Specialist Wing</option>
+            </select>
+            <textarea class="input-field-school" rows="3"
+              placeholder="Any Specific Requirements / Pre-Academic Queries"></textarea>
+            <button type="submit" class="btn-gold"
+              style="justify-content: center; background: var(--gold-accent); color: #0f172a; font-weight: 700;">Submit
+              Digital Document</button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="web-footer">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <h3 class="footer-brand-title">APEX INT.</h3>
+          <p style="font-size: 14px; line-height: 1.6; margin-bottom: 15px;">Nurturing deep knowledge intelligence,
+            ethical moral values, and global innovation skill sets for modern future leaders.</p>
+          <div class="footer-socials">
+            <a href="#"><i class="fa-brands fa-facebook"></i></a>
+            <a href="#"><i class="fa-brands fa-linkedin"></i></a>
+            <a href="#"><i class="fa-brands fa-instagram"></i></a>
+            <a href="#"><i class="fa-brands fa-youtube"></i></a>
+          </div>
+        </div>
+        <div class="footer-col">
+          <h4>Quick Navigation</h4>
+          <ul class="footer-links">
+            <li><a href="#">Home Portal Portal</a></li>
+            <li><a href="#about">Academic Profiles</a></li>
+            <li><a href="#faculty">Faculty Details</a></li>
+            <li><a href="#admissions">Admissions Procedure</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <ul class="footer-links">
+            <li><a href="#">Student Code Matrix</a></li>
+            <li><a href="#">Fee Structure Details</a></li>
+            <li><a href="#">Digital Exam Schedules</a></li>
+            <li><a href="#">Online Complaint Box</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Campus Contact Info</h4>
+          <p style="font-size: 14px; line-height: 1.6; color: #cbd5e1;"><i class="fa-solid fa-location-dot"
+              style="color: var(--gold-accent); margin-right: 8px;"></i> 500 Enterprise Avenue, Institutional Tech
+            District, Block C</p>
+          <p style="font-size: 14px; margin-top: 10px; color: #cbd5e1;"><i class="fa-solid fa-phone"
+              style="color: var(--gold-accent); margin-right: 8px;"></i> Helpdesk: +1 (800) 555-0199</p>
+        </div>
+      </div>
+      <div class="copyright-bar container-wide">
+        <p>&copy; 2026 Apex International Educational Institution. All Rights Deservedly Protected. Powered by Next-Gen
+          Glass ERP.</p>
+      </div>
+    </footer>
+
+  </div>
+
+
+  <div id="portalView" class="view-container portal-layout">
+
+    <aside class="glass-card sidebar">
+      <div class="brand-logo">
+        <div class="brand-icon">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+          <h2 class="brand-name">Apex Portal</h2>
+          <p style="font-size: 10px; color: var(--success-text); font-weight: 700; text-transform: uppercase;"
+            id="userRoleBadge">Role: Admin</p>
+        </div>
+      </div>
+
+      <nav style="display: flex; flex-direction: column; gap: 4px;">
+        <a class="nav-item active" onclick="switchTab('dashboard', this)"><i class="fa-solid fa-chart-pie"
+            style="font-size: 16px;"></i> Core Overview</a>
+        <a class="nav-item" id="navAttendance" onclick="switchTab('attendance', this)"><i
+            class="fa-solid fa-clipboard-user" style="font-size: 16px;"></i> Daily Attendance</a>
+        <a class="nav-item" id="navClasses" onclick="switchTab('classes', this)"><i class="fa-solid fa-chalkboard-user"
+            style="font-size: 16px;"></i> Standard Classes</a>
+        <a class="nav-item" id="navSettings" onclick="switchTab('settings', this)"><i class="fa-solid fa-sliders"
+            style="font-size: 16px;"></i> System Settings</a>
+      </nav>
+
+      <div class="sidebar-footer">
+        <a class="nav-item" onclick="handleLogout()"
+          style="color: #ef4444; background: rgba(239,68,68,0.05); margin-bottom: 0;">
+          <i class="fa-solid fa-power-off"></i> Disconnect System
+        </a>
+      </div>
+    </aside>
+
+    <main class="main-content">
+
+      <header class="glass-card topbar-portal">
+        <div class="topbar-title">
+          <h2 id="portalCurrentViewTitle">Core Executive Overview</h2>
+          <p id="portalCurrentViewDesc">Live structural monitoring across corporate educational profiles.</p>
+        </div>
+        <div class="topbar-btns">
+          <button class="btn-action" style="width: 40px; height: 40px; background: #fff;"
+            onclick="showToast('Data Synced', 'All administrative profiles are currently matching live database.', 'success')">
+            <i class="fa-solid fa-arrows-rotate"></i>
+          </button>
+          <div style="text-align: right;">
+            <p style="font-size: 13px; font-weight: 800;" id="loggedInUserNameDisplay">Administrator Terminal</p>
+            <p style="font-size: 10px; color: var(--text-muted);">Network Online</p>
+          </div>
+          <div
+            style="width: 40px; height: 40px; border-radius: 12px; background: var(--primary-gradient); display: grid; place-content: center; color: white; font-weight: 800;">
+            A
+          </div>
+        </div>
+      </header>
+
+      <div id="tabModuleDashboard" class="portal-tab-content" style="display: block;">
+        <div class="metrics-grid">
+          <div class="metrics-card">
+            <div class="metrics-icon"><i class="fa-solid fa-user-graduate"></i></div>
+            <div class="metrics-info">
+              <h4>Total Registered Students</h4>
+              <p id="statStudents">1,248</p>
+            </div>
+          </div>
+          <div class="metrics-card">
+            <div class="metrics-icon" style="background: var(--gradient-1);"><i class="fa-solid fa-circle-check"></i>
+            </div>
+            <div class="metrics-info">
+              <h4>Live Average Attendance</h4>
+              <p id="statAttendance">94.2%</p>
+            </div>
+          </div>
+          <div class="metrics-card">
+            <div class="metrics-icon" style="background: var(--gradient-2);"><i class="fa-solid fa-wallet"></i></div>
+            <div class="metrics-info">
+              <h4>Fee Collection Ratio</h4>
+              <p id="statFees">88.5%</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding: 24px; margin-bottom: 20px; background: rgba(255,255,255,0.9);">
+          <h3
+            style="font-size: 16px; font-weight: 800; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+            <i class="fa-solid fa-bullhorn" style="color: #4f46e5;"></i> Critical Corporate System Alerts</h3>
+          <p style="font-size: 13px; color: var(--text-muted); line-height: 1.6;">Term exams evaluation sheets locking
+            session terminates automatically by next weekend. Verify and process pending operational lists inside
+            standard evaluation portals promptly.</p>
+        </div>
+      </div>
+
+      <div id="tabModuleAttendance" class="portal-tab-content" style="display: none;">
+        <div class="filter-bar">
+          <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Filter specific entry name tracking ID..." id="studentSearchInput"
+              onkeyup="filterStudentTable()">
+          </div>
+          <div class="filter-group">
+            <div class="dropdowns">
+              <select class="select-custom" id="classSelectFilter" onchange="filterStudentTable()">
+                <option value="all">All Class Sections</option>
+                <option value="Grade 10-A">Grade 10-A</option>
+                <option value="Grade 11-B">Grade 11-B</option>
+              </select>
+              <i class="fa-solid fa-chevron-down"></i>
+            </div>
+            <button class="btn-gold"
+              style="padding: 0 16px; height: 40px; font-size: 13px; background: #2563eb; color: #fff; border: none;"
+              onclick="saveLiveAttendanceData()">
+              <i class="fa-solid fa-cloud-arrow-up"></i> Save Updates
+            </button>
+          </div>
+        </div>
+
+        <div class="glass-card student-record" style="padding: 14px;">
+          <div class="table-scroll">
+            <table>
+              <thead>
+                <tr>
+                  <th>Profile</th>
+                  <th>Student Name</th>
+                  <th>Roll Reference</th>
+                  <th>Standard Grade</th>
+                  <th>Current Metric Status</th>
+                  <th id="thActionControlTitle">Quick Live Updates Trigger</th>
+                </tr>
+              </thead>
+              <tbody id="attendanceRecordsTableBody">
+                <tr data-class="Grade 10-A">
+                  <td><img
+                      src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?q=80&w=100&auto=format&fit=cover"
+                      class="student-img"></td>
+                  <td class="st-name">Alexander Wright</td>
+                  <td>#20261001</td>
+                  <td>Grade 10-A</td>
+                  <td><span class="status-badge present" id="badge-0">Present</span></td>
+                  <td>
+                    <div class="status-selector">
+                      <button class="status-btn-opt active-P" onclick="updateInlineStatus(0, 'P')">P</button>
+                      <button class="status-btn-opt" onclick="updateInlineStatus(0, 'A')">A</button>
+                      <button class="status-btn-opt" onclick="updateInlineStatus(0, 'L')">L</button>
+                    </div>
+                  </td>
+                </tr>
+                <tr data-class="Grade 11-B">
+                  <td><img
+                      src="https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=100&auto=format&fit=cover"
+                      class="student-img"></td>
+                  <td class="st-name">Sophia Martinez</td>
+                  <td>#20261104</td>
+                  <td>Grade 11-B</td>
+                  <td><span class="status-badge absent" id="badge-1">Absent</span></td>
+                  <td>
+                    <div class="status-selector">
+                      <button class="status-btn-opt" onclick="updateInlineStatus(1, 'P')">P</button>
+                      <button class="status-btn-opt active-A" onclick="updateInlineStatus(1, 'A')">A</button>
+                      <button class="status-btn-opt" onclick="updateInlineStatus(1, 'L')">L</button>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div id="tabModuleClasses" class="portal-tab-content" style="display: none;">
+        <div class="classes-card-grid" id="classesMatrixGridContainer">
+
+          <div class="class-card">
+            <div class="class-card-header">
+              <span class="class-card-name">Grade 10-A</span>
+              <span class="class-card-room">Room 302</span>
+            </div>
+            <div class="card-teacher-box">
+              <p class="teacher-box-label">Assigned Lecturer Profile</p>
+              <p class="class-teacher">Prof. Sarah Jenkins</p>
+            </div>
+            <div class="class-card-progress">
+              <div class="card-progress-meta"><span>Physics Syllabus Covered</span><span>82%</span></div>
+              <div class="card-progress-track">
+                <div class="card-progress-fill" style="width: 82%;"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="class-card" style="border-left-color: #10b981;">
+            <div class="class-card-header">
+              <span class="class-card-name">Grade 11-B</span>
+              <span class="class-card-room">Lab Block 2</span>
+            </div>
+            <div class="card-teacher-box">
+              <p class="teacher-box-label">Assigned Lecturer Profile</p>
+              <p class="class-teacher">Dr. Robert Chen</p>
+            </div>
+            <div class="class-card-progress">
+              <div class="card-progress-meta"><span>Computer Science Units</span><span>65%</span></div>
+              <div class="card-progress-track">
+                <div class="card-progress-fill" style="width: 65%; background: var(--gradient-1);"></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="tabModuleSettings" class="portal-tab-content" style="display: none;">
+        <div class="glass-card" style="padding: 30px; background: #fff;">
+          <h3
+            style="font-size: 18px; font-weight: 800; margin-bottom: 20px; border-bottom: 1px solid var(--row-border); padding-bottom: 10px;">
+            Portal Control Matrix</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px; max-width: 500px;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <div>
+                <p style="font-size: 14px; font-weight: 700;">Automatic Database Cloud Backups</p>
+                <p style="font-size: 11px; color: var(--text-muted);">Synchronize data to secure remote storage hourly.
+                </p>
+              </div>
+              <input type="checkbox" checked style="width: 20px; height: 20px; cursor: pointer;">
+            </div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 10px;">
+              <div>
+                <p style="font-size: 14px; font-weight: 700;">Parent SMS Notification Triggers</p>
+                <p style="font-size: 11px; color: var(--text-muted);">Send automated updates for absent records
+                  immediately.</p>
+              </div>
+              <input type="checkbox" style="width: 20px; height: 20px; cursor: pointer;">
+            </div>
+            <button class="btn-gold"
+              style="background: #0f172a; color: white; border: none; margin-top: 20px; justify-content: center;"
+              onclick="showToast('Settings Locked', 'System configurations updated globally.', 'info')">Save
+              Configuration</button>
+          </div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+
+
+  <div class="modal-overlay-framework" id="loginSystemModalOverlay">
+    <div class="login-modal-container">
+      <button class="modal-close-btn" onclick="closeLoginModal()"><i class="fa-solid fa-xmark"></i></button>
+
+      <div class="login-split-left">
+        <div class="glowing-orb" style="background: rgba(255,255,255,0.2); top:-20px; left:-20px;"></div>
+        <div class="left-logo-header">
+          <div class="left-logo-icon"><i class="fa-solid fa-graduation-cap"></i></div>
+          <h2 class="left-logo-title">Apex Core</h2>
+        </div>
+
+        <div class="left-welcome-text">
+          <h2>Secure Enterprise Centralized Portal</h2>
+          <p>Provide authenticated security key attributes to link matching operational administrative roles safely.</p>
+        </div>
+
+        <div class="artistic-canvas">
+          <div class="art-shape art-blob-1"></div>
+          <div class="art-shape art-blob-2"></div>
+        </div>
+
+        <div class="left-footer">
+          <p>Protected by Apex Cryptographic Security Protocol Modules &bull; Live Authorization Nodes Active.</p>
+        </div>
+      </div>
+
+      <div class="login-split-right">
+        <div class="login-title-area">
+          <h3>Authentication Access</h3>
+          <p>Enter administrative operational parameters below.</p>
+        </div>
+
+        <form onsubmit="handleLoginValidation(event)">
+          <div class="form-group-custom">
+            <label>Security Access Account ID</label>
+            <div class="input-wrapper-icon">
+              <i class="fa-solid fa-user-shield"></i>
+              <input type="text" id="inputAuthUserField" placeholder="e.g., admin_apex" required>
+            </div>
+          </div>
+          <div class="form-group-custom">
+            <label>Cryptographic Private Password</label>
+            <div class="input-wrapper-icon">
+              <i class="fa-solid fa-key"></i>
+              <input type="password" id="inputAuthPassField" placeholder="••••••••" required>
+            </div>
+          </div>
+          <button type="submit" class="btn-login-submit">Authorize Session Entry</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+
+
+  <script>
+    // System Loader Operations
+    window.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        const preloader = document.getElementById('preloader');
+        preloader.classList.add('loaded');
+      }, 1200);
+    });
+
+    // Public Image Banner Presentation Rotator Engine
+    let currentHeroSlideIndex = 0;
+    const heroSlidesList = document.querySelectorAll('.hero-slide');
+
+    function moveSlide(direction) {
+      heroSlidesList[currentHeroSlideIndex].classList.remove('active');
+      currentHeroSlideIndex = (currentHeroSlideIndex + direction + heroSlidesList.length) % heroSlidesList.length;
+      heroSlidesList[currentHeroSlideIndex].classList.add('active');
+    }
+
+    // Auto rotate banner sliders every 6 seconds
+    setInterval(() => { moveSlide(1); }, 6000);
+
+    // Testimonial Fade Rotator
+    let currentTestiIndex = 0;
+    const testimonialSlides = document.querySelectorAll('.testimonial-slide');
+    setInterval(() => {
+      if (testimonialSlides.length === 0) return;
+      testimonialSlides[currentTestiIndex].classList.remove('active');
+      currentTestiIndex = (currentTestiIndex + 1) % testimonialSlides.length;
+      testimonialSlides[currentTestiIndex].classList.add('active');
+    }, 5000);
+
+    // Modal Control Handlers
+    function openLoginModal() {
+      document.getElementById('loginSystemModalOverlay').classList.add('active-modal');
+    }
+    function closeLoginModal() {
+      document.getElementById('loginSystemModalOverlay').classList.remove('active-modal');
+    }
+
+    // View Switching Layout Infrastructure Engine
+    function switchView(targetViewMode) {
+      const webView = document.getElementById('websiteView');
+      const portalView = document.getElementById('portalView');
+
+      if (targetViewMode === 'portal') {
+        webView.classList.remove('active-view');
+        portalView.classList.add('active-view');
+        document.body.classList.add('portal-active');
+      } else {
+        portalView.classList.remove('active-view');
+        webView.classList.add('active-view');
+        document.body.classList.remove('portal-active');
+      }
+    }
+
+    // Dashboard Internal Tab Navigation Logic
+    function switchTab(tabId, navElement) {
+      // Deactivate all tab sections
+      document.querySelectorAll('.portal-tab-content').forEach(tab => tab.style.display = 'none');
+      document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+
+      // Setup dynamic contextual headers based on selected tab view choice
+      const titleObj = document.getElementById('portalCurrentViewTitle');
+      const descObj = document.getElementById('portalCurrentViewDesc');
+
+      if (tabId === 'dashboard') {
+        document.getElementById('tabModuleDashboard').style.display = 'block';
+        titleObj.innerText = "Core Executive Overview";
+        descObj.innerText = "Live structural monitoring across corporate educational profiles.";
+      } else if (tabId === 'attendance') {
+        document.getElementById('tabModuleAttendance').style.display = 'block';
+        titleObj.innerText = "Student Attendance Portal";
+        descObj.innerText = "Real-time verification logs and verification checklists management.";
+      } else if (tabId === 'classes') {
+        document.getElementById('tabModuleClasses').style.display = 'block';
+        titleObj.innerText = "Standard Class Allocations";
+        descObj.innerText = "Live tracks on educational progress metrics inside institutional rooms.";
+      } else if (tabId === 'settings') {
+        document.getElementById('tabModuleSettings').style.display = 'block';
+        titleObj.innerText = "System Parameters Configuration";
+        descObj.innerText = "Manage security clouds, alert notifications, and system criteria.";
+      }
+
+      navElement.classList.add('active');
+    }
+
+    // Interactive Student Attendance Tracker Controller Operations
+    function updateInlineStatus(recordRowIndex, targetStatusTypeChar) {
+      const targetBadge = document.getElementById(`badge-${recordRowIndex}`);
+      const parentRow = targetBadge.closest('tr');
+      const statusSelectorContainer = parentRow.querySelector('.status-selector');
+
+      // Update badge display values
+      if (targetStatusTypeChar === 'P') {
+        targetBadge.className = "status-badge present";
+        targetBadge.innerText = "Present";
+      } else if (targetStatusTypeChar === 'A') {
+        targetBadge.className = "status-badge absent";
+        targetBadge.innerText = "Absent";
+      } else if (targetStatusTypeChar === 'L') {
+        targetBadge.className = "status-badge";
+        targetBadge.style.backgroundColor = "rgba(245, 158, 11, 0.12)";
+        targetBadge.style.color = "#f59e0b";
+        targetBadge.innerText = "Late Arrival";
+      }
+
+      // Re-render sub button styling highlights inside matching selector element block
+      const controlButtons = statusSelectorContainer.querySelectorAll('.status-btn-opt');
+      controlButtons.forEach(btn => {
+        btn.classList.remove('active-P', 'active-A', 'active-L');
+        if (btn.innerText === targetStatusTypeChar) {
+          btn.classList.add(`active-${targetStatusTypeChar}`);
+        }
+      });
+
+      showToast('Status Altered', `Student status initialized to alternative state successfully.`, 'info');
+    }
+
+    // Filter Processing Matrix Engine for Live Lists
+    function filterStudentTable() {
+      const searchValString = document.getElementById('studentSearchInput').value.toLowerCase();
+      const targetSelectionClass = document.getElementById('classSelectFilter').value;
+      const targetTableRowsList = document.querySelectorAll('#attendanceRecordsTableBody tr');
+
+      targetTableRowsList.forEach(row => {
+        const studentNameText = row.querySelector('.st-name').innerText.toLowerCase();
+        const rowAssociatedClass = row.getAttribute('data-class');
+
+        const matchingSearchQueryFlag = studentNameText.includes(searchValString);
+        const matchingClassSelectionFlag = (targetSelectionClass === 'all' || rowAssociatedClass === targetSelectionClass);
+
+        if (matchingSearchQueryFlag && matchingClassSelectionFlag) {
+          row.style.display = "";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    function saveLiveAttendanceData() {
+      showToast('Data Synced Successfully', 'Attendance sheets processed inside central mainframes successfully.', 'success');
+    }
+
+    // Core Security Access Validation Processor Logic
+    let currentSessionLoginState = false;
+    let authorizedSessionUserRole = "";
+
+    function handleLoginValidation(event) {
+      event.preventDefault();
+      const enteredUsernameString = document.getElementById('inputAuthUserField').value;
+      const enteredPasswordString = document.getElementById('inputAuthPassField').value;
+
+      // System Credentials Verification Strategy Check
+      if ((enteredUsernameString === 'admin' || enteredUsernameString === 'admin_apex') && enteredPasswordString === 'admin123') {
+        currentSessionLoginState = true;
+        authorizedSessionUserRole = "Admin";
+
+        // Render Interface parameters
+        document.getElementById('userRoleBadge').innerText = "Role: Administrator";
+        document.getElementById('userRoleBadge').style.color = "#10b981";
+        document.getElementById('loggedInUserNameDisplay').innerText = "System Executive Admin";
+
+        // Enable complete configuration navigation trees
+        document.getElementById('navAttendance').style.display = "flex";
+        document.getElementById('navClasses').style.display = "flex";
+        document.getElementById('navSettings').style.display = "flex";
+
+        closeLoginModal();
+        switchView('portal');
+        showToast('Authorized Entry Granted', 'Welcome back to the executive operational center.', 'success');
+      }
+      else if (enteredUsernameString === 'teacher' && enteredPasswordString === 'teacher123') {
+        currentSessionLoginState = true;
+        authorizedSessionUserRole = "Teacher";
+
+        // Render Interface parameters for restricted teacher profiles
+        document.getElementById('userRoleBadge').innerText = "Role: Educator Expert";
+        document.getElementById('userRoleBadge').style.color = "#f59e0b";
+        document.getElementById('loggedInUserNameDisplay').innerText = "Prof. Sarah Jenkins";
+
+        // Apply security permission constraints on settings elements
+        document.getElementById('navAttendance').style.display = "flex";
+        document.getElementById('navClasses').style.display = "flex";
+        document.getElementById('navSettings').style.display = "none"; // Hide system parameters control
+
+        closeLoginModal();
+        switchView('portal');
+        showToast('Educator Access Granted', 'Class sections log tracking profile synced securely.', 'success');
+      }
+      else {
+        showToast('Authentication Refused', 'Invalid credentials profile attributes. Please re-verify credentials parameters.', 'error');
+      }
+    }
+
+    function handleLogout() {
+      currentSessionLoginState = false;
+      authorizedSessionUserRole = "";
+      showToast('Session Terminated', 'You have disconnected safely from the secure management core.', 'info');
+      switchView('website');
+    }
+
+    // Real-Time Custom Toast UI Generator
+    function showToast(title, msg, type = 'success') {
+      const container = document.getElementById('toastContainer');
+      const toast = document.createElement('div');
+      toast.className = `toast toast-${type}`;
+
+      let icon = '<i class="fa-solid fa-check"></i>';
+      if (type === 'info') icon = '<i class="fa-solid fa-info"></i>';
+      if (type === 'error') icon = '<i class="fa-solid fa-exclamation"></i>';
+
+      toast.innerHTML = `
+        <div class="toast-icon">
+          ${icon}
+        </div>
+        <div class="toast-content">
+          <p class="toast-title">${title}</p>
+          <p class="toast-msg">${msg}</p>
+        </div>
+      `;
+
+      container.appendChild(toast);
+
+      setTimeout(() => {
+        toast.classList.add('show');
+      }, 100);
+
+      setTimeout(() => {
+        toast.classList.remove('show');
+        setTimeout(() => {
+          container.removeChild(toast);
+        }, 500);
+      }, 4500);
+    }
+  </script>
+
+</body>
+
+</html>

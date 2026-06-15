@@ -1,6 +1,10 @@
 <?php
+
+// ROLE BASED AUTHENTICATION
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/admin_auth.php";
+
 // include sidebar
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/sidebar.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/admin_sidebar.php";
 
 // include db
 include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
@@ -35,7 +39,7 @@ include "add_section_modal.php";
                 <span>Add Section</span>
             </button>
 
-            <button class="btn-icon">
+            <!-- <button class="btn-icon">
                 <i class="fa-solid fa-moon"></i>
             </button>
 
@@ -44,7 +48,47 @@ include "add_section_modal.php";
             <button class="btn btn-excel">
                 <i class="fa-solid fa-file-excel"></i>
                 <span>Excel Export</span>
-            </button>
+            </button> -->
+
+            <?php
+
+            $userName = $_SESSION['user_name'];
+            $userEmail = $_SESSION['user_email'];
+            $userRole = $_SESSION['role'];
+
+            $profileImage = !empty($_SESSION['user_image'])
+                ? "/student_management_system/" . $_SESSION['user_image']
+                : "/student_management_system/uploads/profile-img.jpg";
+
+
+            ?>
+
+            <div class="btn-primary" style="padding: 8px 16px; border-radius: 10px; font-size: 12.5px; font-weight: 700;">
+                <?= $userRole ?>
+            </div>
+
+            <!-- USER PROFILE DROPDOWN CONTAINER -->
+            <div class="user-profile-container desktop">
+                <button class="profile-trigger-btn" id="profileTrigger" aria-label="Open user menu">
+                    <img src="<?= $profileImage ?>" alt="User Profile" class="user-avatar">
+                </button>
+
+                <div class="profile-dropdown-menu" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <img src="<?= $profileImage ?>" alt="User Profile" class="dropdown-avatar">
+                        <div class="user-info">
+                            <h4><?= $userName ?></h4>
+                            <p><?= $userEmail ?></p>
+                        </div>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <ul class="dropdown-links">
+                        <li><a href="#" class="menu-action" data-action="Profile"><i class="fa-solid fa-user"></i> My Profile</a></li>
+                        <li><a href="#" class="menu-action" data-action="Settings"><i class="fa-solid fa-gear"></i> Account Settings</a></li>
+                        <li><a href="#" class="menu-action logout-link" data-action="Logout"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
 
         </div>
     </header>

@@ -8,7 +8,10 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $sql = "SELECT * FROM users WHERE email='$email'";
+    $sql = "SELECT users.id AS id, users.images AS images, 
+    users.name AS name, users.email AS email, users.password AS password, users.role AS role, teachers.tid AS tid FROM users LEFT JOIN teachers
+    ON users.id = teachers.user_id
+    WHERE users.email='$email'";
     $result = $conn->query($sql);
     $user = $result->fetch_assoc();
 
@@ -20,29 +23,28 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
     if (password_verify($password, $user['password'])) {
 
         $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_image'] = $user['images'];
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
+        $_SESSION['tid'] = $user['tid'];
+        echo $_SESSION['tid'];
 
         // ROLE REDIRECT
         if ($user['role'] == "admin") {
             header("Location: admin/dashboard.php");
             exit;
-        }
-        elseif ($user['role'] == "teacher") {
+        } elseif ($user['role'] == "teacher") {
             header("Location: teacher/dashboard.php");
             exit;
-        }
-        else {
+        } else {
             header("Location: student/dashboard.php");
             exit;
         }
-
     } else {
         echo "Wrong password";
         exit;
     }
-
 } else {
     echo "Form not submitted properly";
 }
-
-?>

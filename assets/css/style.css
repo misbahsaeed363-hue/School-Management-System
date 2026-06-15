@@ -185,7 +185,7 @@ body {
     border-radius: var(--radius-medium);
     text-decoration: none;
     color: var(--text-muted);
-    font-size: 14px;
+    font-size: 16px;
     font-weight: 600;
     cursor: pointer;
     /* font-size: 16px; */
@@ -646,7 +646,8 @@ body {
 }
 
 /* FOR TABLE */
-.student-record {
+.student-record,
+.teacher-record {
     flex-grow: 1;
     display: flex;
     flex-direction: column;
@@ -2502,7 +2503,7 @@ table {
     background: var(--input-bg) !important;
 }
 
-/* --- USER PROFILE DROPDOWN CSS --- */
+/* --- USER PROFILE DROPDOWN --- */
 .user-profile-container {
     position: relative;
     display: inline-block;
@@ -2659,3 +2660,49 @@ table {
 .dropdown-links li a.logout-link:hover i {
     color: #ef4444;
 }
+
+/* TEACHER PANEL STUDENTS */
+
+.assignments-tabs-container {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding: 8px 4px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    scroll-behavior: smooth;
+}
+
+.assignments-tabs-container::-webkit-scrollbar {
+    height: 4px;
+}
+
+.assignment-tab.active-tab {
+    background: var(--primary-gradient);
+    color: #fff;
+    border-color: transparent;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.assignment-tab {
+    padding: 8px 16px;
+    border-radius: 10px;
+    font-size: 12.5px;
+    font-weight: 700;
+    cursor: pointer;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    color: var(--text-muted);
+    white-space: nowrap;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.02);
+}
+
+.assignment-tab:hover {
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text-dark);
+    transform: translateY(-1px);
+}
+

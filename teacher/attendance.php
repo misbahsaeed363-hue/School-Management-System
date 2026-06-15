@@ -1,10 +1,10 @@
 <?php
 
 // ROLE BASED AUTHENTICATION
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/admin_auth.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/teacher_auth.php";
 
 // include sidebar
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/admin_sidebar.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/teacher_sidebar.php";
 
 // include connection
 include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
@@ -45,6 +45,46 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
             </button>
 
+            <?php
+
+            $userName = $_SESSION['user_name'];
+            $userEmail = $_SESSION['user_email'];
+            $userRole = $_SESSION['role'];
+
+            $profileImage = !empty($_SESSION['user_image'])
+                ? "/student_management_system/" . $_SESSION['user_image']
+                : "/student_management_system/uploads/profile-img.jpg";
+
+
+            ?>
+
+            <div class="btn-primary" style="padding: 8px 16px; border-radius: 10px; font-size: 12.5px; font-weight: 700;">
+                <?= $userRole ?>
+            </div>
+
+            <!-- USER PROFILE DROPDOWN CONTAINER -->
+            <div class="user-profile-container">
+                <button class="profile-trigger-btn" id="profileTrigger" aria-label="Open user menu">
+                    <img src="<?= $profileImage ?>" alt="User Profile" class="user-avatar">
+                </button>
+
+                <div class="profile-dropdown-menu" id="profileDropdown">
+                    <div class="dropdown-header">
+                        <img src="<?= $profileImage ?>" alt="User Profile" class="dropdown-avatar">
+                        <div class="user-info">
+                            <h4><?= $userName ?></h4>
+                            <p><?= $userEmail ?></p>
+                        </div>
+                    </div>
+                    <hr class="dropdown-divider">
+                    <ul class="dropdown-links">
+                        <li><a href="#" class="menu-action" data-action="Profile"><i class="fa-solid fa-user"></i> My Profile</a></li>
+                        <li><a href="#" class="menu-action" data-action="Settings"><i class="fa-solid fa-gear"></i> Account Settings</a></li>
+                        <li><a href="#" class="menu-action logout-link" data-action="Logout"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a></li>
+                    </ul>
+                </div>
+            </div>
+
         </div>
 
     </header>
@@ -65,31 +105,11 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
             <!-- DATE -->
             <input type="date" id="attendanceDate" class="select-custom" value="<?php echo date('Y-m-d'); ?>">
 
-            <!-- CLASS FILTER -->
-            <div class="dropdowns">
-
-                <select id="attendence-class" class="select-custom classFilter">
-
-                    <option value="All" disabled selected>All Classes</option>
-
-                    <?php include "classDropdown.php"; ?>
-
-                </select>
-
-                <i class="fa-solid fa-chevron-down"></i>
-
+            <div id="attendance-tabs" class="tab-container">
+                <!-- DYNAMICALLY CREATED BY JS -->
             </div>
 
-            <!-- SECTION DROPDOWN -->
-            <div class="dropdowns">
-                <select name="ssection" id="desktopSectionFilter" class="select-custom sectionDropdown" required>
-                    <option value="All" selected disabled>Select Class First</option>
-                    <?php include "sectionDropdown.php" ?>
-                </select>
-                <i class="fa-solid fa-chevron-down"></i>
-            </div>
-
-            <button type="button" class="btn btn-primary" onclick="loadStudentsAttendence()"><i class="fa-solid fa-rotate"></i> Load Students</button>
+            <button type="button" class="btn btn-primary" onclick="loadAttendence()"><i class="fa-solid fa-rotate"></i> Load Students</button>
 
         </div>
 
@@ -108,6 +128,11 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
                     name="attendance_date"
                     id="attendanceDateHidden"
                     value="<?php echo date('Y-m-d'); ?>">
+
+                <input
+                    type="hidden"
+                    name="section_id"
+                    id="section_id">
 
                 <table id="attendanceTable">
 
@@ -169,7 +194,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
 <!-- // include js -->
 <script src="/student_management_system/assets/js/script.js"></script>
-<script src="/student_management_system/assets/js/attendance.js"></script>
+<script src="/student_management_system/assets/js/teacher-attendance.js"></script>
 
 
 <?php if (isset($_SESSION['toast'])) { ?>

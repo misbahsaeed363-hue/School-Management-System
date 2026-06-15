@@ -24,6 +24,7 @@ if (isset($_REQUEST['sclass']) && isset($_REQUEST['sec-name']) && isset($_REQUES
         exit();
         
     } else {
+        
         session_start();
         $_SESSION['toast'] = [
             "type" => "error",

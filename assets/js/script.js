@@ -109,9 +109,10 @@ function loadSections(classId, selectedSection = null) {
         .then(data => {
 
             let sectionDropdown = document.querySelector("#studentSection");
-            console.log(sectionDropdown);
 
-            sectionDropdown.innerHTML = "";
+            if (sectionDropdown) {
+                sectionDropdown.innerHTML = "";
+            }
 
             data.forEach(item => {
                 console.log(item.section_name);
@@ -196,10 +197,17 @@ let sectionModal = document.querySelector("#addSection");
 if (addSection && sectionModal) {
 
     addSection.addEventListener('click', function () {
+
         sectionModal.classList.add("open");
     })
 
 }
+if (sectionModal) {
+    sectionModal.addEventListener("submit", function (e) {
+        e.preventDefault();
+    })
+}
+
 
 // FOR ADD CLASS OPEN IN SECTION DETAIL MODAL AND FETCH DATA
 let sec_DetailBtn = document.querySelectorAll(".section-detail-trigger");
@@ -338,6 +346,10 @@ let closeModal = () => {
 
     if (subject_TeacherModal) {
         subject_TeacherModal.classList.remove("open");
+    }
+
+    if (teacherModal) {
+        teacherModal.classList.remove("open");
     }
 
 }
@@ -827,16 +839,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    // let modalClassSelect = document.querySelector("#studentModal .selectClass");
-
-    // if (modalClassSelect) {
-
-    //     modalClassSelect.addEventListener('change', function () {
-
-    //         loadSections(this.value);
-    //     });
-
-    // }
 });
 
 // FOR BOTTOM FILTER SHEET
@@ -940,7 +942,11 @@ function renderTable(data) {
         </table>
     `;
 
-    document.querySelector("#studentTable").innerHTML = table;
+    let studentTable = document.querySelector("#studentTable");
+
+    if (studentTable) {
+        studentTable.innerHTML = table;
+    }
 }
 
 function renderCard(data) {
@@ -1016,7 +1022,12 @@ function renderCard(data) {
             `;
         });
     }
-    document.querySelector("#studentCards").innerHTML = cards;
+
+    let studentCards = document.querySelector("#studentCards");
+
+    if (studentCards) {
+        studentCards.innerHTML = cards;
+    }
 }
 
 function renderPagination(totalPages, currentPage) {
@@ -1112,6 +1123,7 @@ document.querySelector("#searchInput")
 
         searchTimer = setTimeout(() => {
             loadStudents(1);
+            loadTeachers(1);
         }, 300);
 
     });
@@ -1300,21 +1312,44 @@ document.addEventListener("click", function (e) {
 
     let studentDetailBtn = e.target.closest(".card-accordion-toggle");
 
-    if(!studentDetailBtn) return;
+    if (!studentDetailBtn) return;
 
-        let card = studentDetailBtn.closest(".student-mobile-card");
+    let card = studentDetailBtn.closest(".student-mobile-card");
 
-        let content = card.querySelector(".card-accordion-content");
-        let text = studentDetailBtn.querySelector(".toggle-text");
-        let icon = studentDetailBtn.querySelector("i");
+    let content = card.querySelector(".card-accordion-content");
+    let text = studentDetailBtn.querySelector(".toggle-text");
+    let icon = studentDetailBtn.querySelector("i");
 
-        content.classList.toggle("show");
-        icon.classList.toggle("rotate");
+    content.classList.toggle("show");
+    icon.classList.toggle("rotate");
 
-        if(content.classList.contains("show")){
-            text.innerText = "Hide Details";
-        }else{
-            text.innerText = "View Details";
-        }
+    if (content.classList.contains("show")) {
+        text.innerText = "Hide Details";
+    } else {
+        text.innerText = "View Details";
+    }
 
 })
+
+// FOR OPEN USER profile
+let profileContainer = document.querySelectorAll(".user-profile-container");
+console.log(profileContainer);
+
+
+if (profileContainer) {
+
+    profileContainer.forEach(container => {
+        container.addEventListener('click', function () {
+            let profileMenu = container.querySelector(".profile-dropdown-menu");
+            profileMenu.classList.toggle("show");
+        })
+    })
+
+}
+
+// FOR OPEN ADD STUDENT MODAL IN SMALL SCREENS
+let mobileAddBtn = document.querySelector(".add-mobile-btn");
+
+if(mobileAddBtn && studentModal){
+    
+}

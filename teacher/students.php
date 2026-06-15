@@ -1,12 +1,9 @@
 <?php
-
-// session_start();
-
 // ROLE BASED AUTHENTICATION
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/admin_auth.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/teacher_auth.php";
 
 // include sidebar
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/admin_sidebar.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/teacher_sidebar.php";
 
 // include db
 include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
@@ -25,26 +22,12 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
             </button>
 
             <div class="header-text">
-                <h2>Student Records</h2>
-                <p>Search, filter, add, edit, and manage student details efficiently.</p>
+                <h2>Student Management Center</h2>
+                <p>Manage and monitor students based on your assigned classes and subjects.</p>
             </div>
 
         </div>
         <div class="topbar-btns">
-
-            <button class="btn btn-primary add-btn" id="Add_btn">
-                <i class="fa-solid fa-plus-circle"></i>
-                <span>Add Student</span>
-            </button>
-
-            <!-- <button class="btn-icon">
-                <i class="fa-solid fa-moon"></i>
-            </button> -->
-
-            <!-- <button class="btn btn-excel">
-                <i class="fa-solid fa-file-excel"></i>
-                <span>Excel Export</span>
-            </button> -->
 
             <?php
 
@@ -59,12 +42,12 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
             ?>
 
-            <div class="btn-primary role-div" style="padding: 8px 16px; border-radius: 10px; font-size: 12.5px; font-weight: 700;">
+            <div class="btn-primary" style="padding: 8px 16px; border-radius: 10px; font-size: 12.5px; font-weight: 700;">
                 <?= $userRole ?>
             </div>
 
             <!-- USER PROFILE DROPDOWN CONTAINER -->
-            <div class="user-profile-container desktop">
+            <div class="user-profile-container">
                 <button class="profile-trigger-btn" id="profileTrigger" aria-label="Open user menu">
                     <img src="<?= $profileImage ?>" alt="User Profile" class="user-avatar">
                 </button>
@@ -92,6 +75,12 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
     <div class="main-content-scrollable">
 
+        <!-- Dynamic tabs -->
+        <div class="assignments-tabs-container" id="studentsAssignmentTabs">
+            <!-- Loaded dynamically -->
+        </div>
+
+
         <!-- FILTERS RIBBON -->
         <section class="btn-group glass-card" style="margin-bottom: 12px;">
 
@@ -101,24 +90,6 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
             </div>
 
             <div class="filter-group">
-
-                <div class="dropdowns" id="">
-
-                    <select name="" id="desktopClassFilter" class="select-custom classFilter">
-                        <option value="All">All Classes</option>
-                        <?php include "classDropdown.php" ?>
-                    </select>
-                    <i class="fa-solid fa-chevron-down"></i>
-
-                </div>
-
-                <!-- SECTION DROPDOWN -->
-                <div class="dropdowns">
-                    <select name="" id="desktopSectionFilter" class="select-custom sectionDropdown" required>
-                        <option disabled selected value="All">Select Class First</option>
-                    </select>
-                    <i class="fa-solid fa-chevron-down"></i>
-                </div>
 
                 <div class="dropdowns">
                     <select name="" class="select-custom" id="desktopGenderFilter">
@@ -142,26 +113,44 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
         </section>
 
+        <!-- STUDENT RECORD -->
         <section class="student-record glass-card">
 
             <!-- TABLE FOR BIG SCREENS -->
             <div class="table-scroll">
-                <table id="studentTable">
-                    <!-- TABLE GENERATED DYNAMICALLY BY JS AND PHP -->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Image</th>
+                            <th>Name</th>
+                            <th>Contact Details</th>
+                            <th>Gender</th>
+                            <th>Class</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="teacherStudentTable">
+                        <!-- TABLE GENERATED DYNAMICALLY BY JS AND PHP -->
                 </table>
             </div>
 
             <!-- CARDS FOR SMALL SCREEN -->
-            <div id="studentCards" class="student-cards">
-                <!-- CARD GENERATED DYNAMICALLY BY JS AND PHP -->
-            </div>
+           <div id="teacherStudentCards" class="student-cards">
+            <!-- CARD GENERATED DYNAMICALLY THROUGH JS -->
+           </div>
 
             <!-- PAGINATION -->
-            <div class="pagination-wrapper" id="desktop-pagination">
+            <!-- <div class="pagination-wrapper" id="desktop-pagination">
 
                 <div class="pagination-info"></div>
                 <div id="pagination"></div>
 
+            </div> -->
+            <div id="pagination" class="pagination-container">
+                <div class="pagination-info"></div>
+                <div id="pagination"></div>
             </div>
 
         </section>
@@ -170,8 +159,6 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
     <!-- ADD STUDENT MODAL -->
     <?php
-    // for add student
-    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/student-form.php";
 
     // confirmation dialogue box
     include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/confirmation-dialogue-box.php";
@@ -187,13 +174,9 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 </main>
 </div>
 
-<!-- FOR SMALL SCREENS ADD FIXED BUTTON -->
-<button class="btn-primary add-mobile-btn" id="Add_btn">
-    <i class="fa-solid fa-plus-circle"></i>
-</button>
-
 <!-- // include js -->
 <script src="/student_management_system/assets/js/script.js"></script>
+<script src="/student_management_system/assets/js/teacher-students.js"></script>
 <?php if (isset($_SESSION['toast'])) { ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

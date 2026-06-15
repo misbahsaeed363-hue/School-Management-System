@@ -18,6 +18,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
     <!-- topbar -->
     <header class="topbar glass-card">
+
         <div class="topbar-title">
 
             <button id="sidebarCollapseBtn" class="sidebar-toggle-btn">
@@ -25,33 +26,34 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
             </button>
 
             <div class="header-text">
-                <h2>Student Records</h2>
-                <p>Search, filter, add, edit, and manage student details efficiently.</p>
+                <h2>Teachers Records</h2>
+                <p>Search, filter, add, edit, and manage teacher details efficiently.</p>
             </div>
 
         </div>
+
         <div class="topbar-btns">
 
-            <button class="btn btn-primary add-btn" id="Add_btn">
+            <button class="btn btn-primary add-btn" id="Add_teacher_btn">
                 <i class="fa-solid fa-plus-circle"></i>
-                <span>Add Student</span>
+                <span>Add Teacher</span>
             </button>
 
             <!-- <button class="btn-icon">
                 <i class="fa-solid fa-moon"></i>
             </button> -->
 
-            <!-- <button class="btn btn-excel">
+            <button class="btn btn-excel">
                 <i class="fa-solid fa-file-excel"></i>
                 <span>Excel Export</span>
-            </button> -->
+            </button>
 
             <?php
 
             $userName = $_SESSION['user_name'];
             $userEmail = $_SESSION['user_email'];
             $userRole = $_SESSION['role'];
-
+            
             $profileImage = !empty($_SESSION['user_image'])
                 ? "/student_management_system/" . $_SESSION['user_image']
                 : "/student_management_system/uploads/profile-img.jpg";
@@ -59,12 +61,12 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
             ?>
 
-            <div class="btn-primary role-div" style="padding: 8px 16px; border-radius: 10px; font-size: 12.5px; font-weight: 700;">
+            <div class="btn-primary" style="padding: 8px 16px; border-radius: 10px; font-size: 12.5px; font-weight: 700;">
                 <?= $userRole ?>
             </div>
 
             <!-- USER PROFILE DROPDOWN CONTAINER -->
-            <div class="user-profile-container desktop">
+            <div class="user-profile-container">
                 <button class="profile-trigger-btn" id="profileTrigger" aria-label="Open user menu">
                     <img src="<?= $profileImage ?>" alt="User Profile" class="user-avatar">
                 </button>
@@ -142,17 +144,17 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
         </section>
 
-        <section class="student-record glass-card">
+        <section class="teacher-record glass-card">
 
             <!-- TABLE FOR BIG SCREENS -->
             <div class="table-scroll">
-                <table id="studentTable">
+                <table id="teacherTable">
                     <!-- TABLE GENERATED DYNAMICALLY BY JS AND PHP -->
                 </table>
             </div>
 
             <!-- CARDS FOR SMALL SCREEN -->
-            <div id="studentCards" class="student-cards">
+            <div id="teacherCards" class="student-cards">
                 <!-- CARD GENERATED DYNAMICALLY BY JS AND PHP -->
             </div>
 
@@ -171,7 +173,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
     <!-- ADD STUDENT MODAL -->
     <?php
     // for add student
-    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/student-form.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/teacher-form.php";
 
     // confirmation dialogue box
     include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/confirmation-dialogue-box.php";
@@ -194,6 +196,7 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 
 <!-- // include js -->
 <script src="/student_management_system/assets/js/script.js"></script>
+<script src="/student_management_system/assets/js/teacher.js"></script>
 <?php if (isset($_SESSION['toast'])) { ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {
