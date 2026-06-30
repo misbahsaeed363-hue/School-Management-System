@@ -2,7 +2,7 @@
 if (isset($_REQUEST['classId'])) {
 
     // include connection
-    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/config/connection.php";
 
     $classId = $_REQUEST['classId'];
 

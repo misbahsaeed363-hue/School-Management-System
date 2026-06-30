@@ -3,7 +3,7 @@
 session_start();
 
 // connect db
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/config/connection.php";
 
 // get values
 $id = $_REQUEST['sid'];

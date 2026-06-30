@@ -104,7 +104,7 @@
                             <label class="form-label" for="username">Username or Email Address *</label>
                             <div class="input-icon-wrapper">
                                 <i class="fa-solid fa-envelope"></i>
-                                <input name="email" style="width: 100%; height: 46px; padding: 0 16px 0 46px;" type="text" id="username" required="" placeholder="admin@domain.com" class="form-control" autocomplete="username">
+                                <input id="email-input" name="email" style="width: 100%; height: 46px; padding: 0 16px 0 46px;" type="text" id="username" required="" placeholder="admin@domain.com" class="form-control" autocomplete="username">
                             </div>
                         </div>
 
@@ -113,23 +113,9 @@
                             <label class="form-label" for="password">Password *</label>
                             <div class="input-icon-wrapper">
                                 <i class="fa-solid fa-lock"></i>
-                                <input name="password" style="width: 100%; height: 46px; padding: 0 16px 0 46px;" type="password" id="password" required="" placeholder="••••••••" class="form-control" autocomplete="current-password">
+                                <input id="password-input" name="password" style="width: 100%; height: 46px; padding: 0 16px 0 46px;" type="password" id="password" required="" placeholder="••••••••" class="form-control" autocomplete="current-password">
                             </div>
                         </div>
-
-                        <!-- ROLE SELECTOR FIELD -->
-                        <!-- <div class="form-group">
-                            <label class="form-label" for="userRole">Role (Bhoomika) *</label>
-                            <div class="input-icon-wrapper">
-                                <i class="fa-solid fa-user-shield"></i>
-                                <select id="userRole" required="" class="form-control select-custom">
-                                    <option value="Prabandhak">Prabandhak (Admin)</option>
-                                    <option value="Shikshak">Shikshak (Teacher)</option>
-                                    <option value="Chhatra">Chhatra (Student)</option>
-                                </select>
-                                <i class="fa-solid fa-chevron-down select-arrow"></i>
-                            </div>
-                        </div> -->
 
                         <!-- Remember Me / Forgot Password option row -->
                         <div class="login-options">
@@ -145,18 +131,38 @@
                             <span>Sign In</span>
                             <i class="fa-solid fa-arrow-right-to-bracket"></i>
                         </button>
+
+                        <!-- FOR QUICK LOGIN BUTTON FOR DEMO -->
+                        <div class="quick-login-section">
+                            <div class="quick-login-divider">
+                                <span>Or Try Demo Accounts</span>
+                            </div>
+                            <p class="quick-login-desc">Select a role below to automatically fill in demo credentials and sign in.</p>
+
+                            <div class="quick-login-buttons">
+                                <button type="button" id="admin_Btn" class="btn-demo demo-admin">
+                                    <i class="fa-solid fa-user-shield"></i> Admin
+                                </button>
+                                <button type="button" id="teacher_Btn" class="btn-demo demo-teacher">
+                                    <i class="fa-solid fa-chalkboard-user"></i> Teacher
+                                </button>
+                                <button type="button" id="student_Btn" class="btn-demo demo-student">
+                                    <i class="fa-solid fa-user-graduate"></i> Students
+                                </button>
+                            </div>
+                        </div>
                     </form>
                 </div>
 
-                <!-- Footer Text -->
-                <!-- <div class="right-footer">
-                    <p>Naye upbhokta hain? <a href="#" onclick="showToast('Sahaayata', 'Naya account banane ke liye super admin se sampark karein.', 'info')">Registration Karein</a></p>
-                </div> -->
+
             </section>
 
         </div>
 
     </div>
+
+    <!-- CUSTOM JS -->
+    <script src="/school_management_system/assets/js/login_page.js"></script>
 
 </body>
 

@@ -2,7 +2,7 @@
 session_start();
 
 // include db
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/config/connection.php";
 
 $section_id = $_POST['section_id'];
 

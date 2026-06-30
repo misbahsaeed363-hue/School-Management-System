@@ -1,4 +1,16 @@
- @media (max-width: 1024px) {}
+ @media (max-width: 1024px) {
+
+     /* FOR PROFILE CONTAINER */
+     .profile-grid-layout {
+         grid-template-columns: 1fr;
+     }
+
+     /* FOR DASHBOARD */
+     .dashboard-grid-charts {
+         grid-template-columns: 1fr;
+         gap: 25px;
+     }
+ }
 
 
  /* ==================================
@@ -10,6 +22,17 @@
      body {
          overflow-x: hidden;
          overflow-y: hidden;
+     }
+
+     .main-content {
+         width: 100%;
+         overflow-x: hidden;
+         width: 100%;
+         margin-top: 0;
+         padding-top: 70px;
+         min-height: calc(100vh - 70px);
+         overflow-y: visible;
+         padding-right: 0;
      }
 
      .wrapper {
@@ -24,8 +47,12 @@
          display: none;
      }
 
-     .role-div,
+     /* .role-div,
      .user-profile-container.desktop {
+         display: none;
+     } */
+
+     #desktop-container {
          display: none;
      }
 
@@ -38,7 +65,7 @@
          top: 0;
          left: 0;
          width: 100%;
-         z-index: 1200;
+         z-index: 1000;
          background: rgba(255, 255, 255, .85);
          backdrop-filter: blur(20px);
          border-bottom: 1px solid rgba(0, 0, 0, .08);
@@ -126,6 +153,7 @@
      .profile-wrapper {
          width: 170px;
          height: 170px;
+         margin: auto;
      }
 
      .left-modal-hint {
@@ -134,26 +162,11 @@
          line-height: 1;
      }
 
-     .left-modal {
+     /* .left-modal {
          padding: 45px 24px;
-     }
-
-     .main-content {
-
-         /* width: 100%;
-
-        margin-top: 70px; */
-         width: 100%;
-         margin-top: 0;
-         padding-top: 70px;
-         min-height: calc(100vh - 70px);
-         overflow-y: visible;
-         padding-right: 0;
-     }
+     } */
 
      .main-content-scrollable {
-         /* overflow: visible; */
-         /* padding-right: 4px; */
          overflow-y: scroll;
      }
 
@@ -164,33 +177,20 @@
          gap: 12px;
      }
 
-     .topbar-btns {
+     /* .topbar-btns {
          flex-wrap: wrap;
-     }
-
-     /* .btn-group {
-         flex-direction: column;
-         align-items: stretch;
      } */
 
      .search-box {
          width: 213px;
      }
 
-     /* .search-box {
-         max-width: 100%;
-     } */
-
-     /* .filter-group {
-         flex-direction: column;
-         width: 100%;
-     } */
-
      .dropdowns,
      .select-custom {
          width: 100%;
      }
 
+     /* FOR MODAL */
      .form-grid {
          grid-template-columns: 1fr;
      }
@@ -199,8 +199,38 @@
          grid-column: span 1;
      }
 
+     /* VIEW STUDENT MODAL*/
+     .view-modal-body {
+         flex-direction: column;
+         gap: 20px;
+     }
+
+     .view-profile-sidebar {
+         border-right: none !important;
+         border-bottom: 1px solid var(--glass-border);
+         padding-right: 0 !important;
+         padding-bottom: 20px;
+     }
+
+     .view-data-grid {
+         grid-template-columns: 1fr !important;
+         gap: 12px;
+     }
+
+     .view-info-pane {
+         width: 100%;
+     }
+
      .modal-overlay {
          padding: 12px;
+     }
+
+     .modal-header.desktop {
+         display: none;
+     }
+
+     .modal-header.mobile {
+         display: flex;
      }
 
      .modal-container.student {
@@ -215,15 +245,229 @@
      .left-modal {
          border-right: none;
          border-bottom: 1px solid var(--modal-left-border);
+         padding-top: 25px;
+         padding-bottom: 100px;
      }
 
-     .modal-scrollable-body {
+     .modal-scrollable-body.double {
          max-height: none;
          overflow: visible;
+     }
+
+     .modal-scrollable-body.single {
+         overflow-y: scroll;
+     }
+
+     .status-selector {
+         display: grid;
+         grid-template-columns: repeat(4, 1fr);
+         gap: 6px;
+         width: 100%;
+     }
+
+     .remarks-input {
+         width: 100%;
+     }
+
+     .student-profile {
+         width: 100%;
+     }
+
+     .classes-card-grid {
+         display: grid;
+         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+         gap: 16px;
+     }
+
+     /* FOR STUDENT PANEL ATTENDANCE PAGE */
+     .calendar-header-row {
+         flex-direction: column;
+         gap: 15px;
+         text-align: center;
+     }
+
+     .calendar-legend {
+         justify-content: center;
+         flex-wrap: wrap;
+     }
+
+     /* LOGIN PAGE */
+     .login-wrapper {
+         padding: 20px;
+         height: auto;
+         min-height: 100vh;
+         display: flex;
+         align-items: center;
+         justify-content: center;
+     }
+
+     .login-container {
+         width: 100%;
+         max-width: 500px;
+         height: auto;
+         flex-direction: column;
+         border-radius: var(--radius-large);
+         box-shadow: var(--modal-shadow);
+         overflow: hidden;
+     }
+
+     .login-left {
+         padding: 30px 24px;
+         border-radius: var(--radius-large) var(--radius-large) 0 0;
+         text-align: center;
+         gap: 20px;
+     }
+
+     .login-left .left-brand-info {
+         margin: 20px 0;
+     }
+
+     /* Agar right side form area (.login-right ya jo bhi panel tha) ho */
+     .login-right,
+     .login-container section:nth-child(2) {
+         border-radius: 0 0 var(--radius-large) var(--radius-large);
+         padding: 32px 24px;
      }
  }
 
  @media (max-width: 768px) {
+
+     .topbar-btns {
+         width: 100%;
+         display: flex;
+         justify-content: flex-start;
+     }
+
+     .topbar-btns .btn {
+         width: 100%;
+         justify-content: center;
+     }
+
+     .student-record.attendance {
+         display: flex;
+     }
+
+     .student-record.attendance thead tr {
+         display: none;
+         /* Hide header completely */
+     }
+
+     .student-record.attendance tbody {
+         display: grid;
+         grid-template-columns: 1fr;
+         gap: 12px;
+         /* width: 88vw; */
+     }
+
+     .student-record.attendance tbody tr {
+         background: #ffffff;
+         border: 1px solid var(--input-border);
+         border-radius: var(--radius-medium);
+         padding: 14px;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.02);
+         transition: transform 0.2s ease;
+         height: 267px;
+     }
+
+     .student-record.attendance tbody tr:hover {
+         transform: translateY(-2px);
+     }
+
+     .student-record.attendance td {
+         display: flex;
+         align-items: center;
+         justify-content: space-between;
+         padding: 13px 0;
+         border: none !important;
+         width: 100%;
+         box-sizing: border-box;
+     }
+
+     /* Dynamic CSS Attribute Injectors */
+     .student-record.attendance td::before {
+         content: attr(data-label);
+         font-size: 11px;
+         font-weight: 800;
+         color: var(--text-muted);
+         text-transform: uppercase;
+         letter-spacing: 0.5px;
+         padding: 2px;
+     }
+
+     .remarks-input {
+         width: 100%;
+         height: 36px;
+         border-radius: var(--radius-small);
+         border: 1px solid var(--input-border);
+         background: var(--input-bg);
+         padding: 0 10px;
+         font-size: 12px;
+         outline: none;
+         transition: all 0.2s;
+     }
+
+     .student-record.attendance td:first-child {
+         border-radius: 0;
+     }
+
+     .student-record.attendance td:last-child {
+         border-radius: 0;
+     }
+
+     .student-profile {
+         justify-content: flex-end;
+     }
+
+     /* Status & remarks row highlights */
+     .student-record.attendance td[data-label="Status"] {
+         flex-direction: column;
+         align-items: stretch;
+         border-top: 1px dashed var(--input-border);
+         /* padding-top: 14px; */
+         /* margin-top: 10px; */
+         gap: 8px;
+     }
+
+     .student-record.attendance td[data-label="Status"]::before {
+         /* margin-bottom: 4px; */
+         border-top: 1px dashed var(--input-border);
+         margin-top: 46px;
+     }
+
+     .student-record.attendance td[data-label="Remarks"] {
+         flex-direction: column;
+         align-items: stretch;
+         /* border-top: 1px dashed var(--input-border) !important; */
+         /* padding-top: 14px;
+         margin-top: 6px; */
+         margin-bottom: 6px;
+         gap: 8px;
+     }
+
+     .student-record.attendance td[data-label="Remarks"]::before {
+         /* margin-bottom: 4px; */
+     }
+
+     .status-selector {
+         width: 100%;
+         justify-content: space-between;
+     }
+
+     .status-btn {
+         flex: 1;
+     }
+
+
+     .metrics-grid {
+         grid-template-columns: repeat(1, 1fr);
+         gap: 0;
+     }
+
+     .horizontal-bar-chart {
+         grid-template-columns: repeat(1, 1fr);
+         margin-top: 8px;
+         gap: 6px 20px;
+     }
 
      .modal-overlay {
          padding: 8px;
@@ -240,9 +484,20 @@
          padding: 24px;
      }
 
-     .left-modal {
-         padding-bottom: 110px;
-         padding-top: 70px;
+     /* FOR STUDENT PANEL ATTENDANCE PAGE */
+     .calendar-view-container {
+         margin: 10px !important;
+     }
+
+     .calendar-grid {
+         grid-template-columns: repeat(7, 1fr);
+         gap: 5px;
+     }
+
+     .calendar-day {
+         min-height: 70px;
+         padding: 5px;
+         font-size: 12px;
      }
  }
 
@@ -276,7 +531,7 @@
          border: none;
      }
 
-     .table-scroll {
+     .table-scroll.desktop {
          display: none;
      }
 
@@ -289,7 +544,6 @@
  }
 
  @media (max-width: 670px) {
-
 
      .profile-wrapper {
          width: 160px;
@@ -317,6 +571,22 @@
          border-radius: 22px;
      }
 
+     .dashboard-grid-charts {
+         grid-template-columns: 1fr;
+         gap: 15px;
+     }
+
+     .chart-container-wrapper {
+         height: 250px;
+     }
+
+     /* FOR STUDENT PANEL ATTENDANCE PAGE */
+
+     .calendar-grid {
+         grid-template-columns: repeat(5, 1fr);
+         gap: 5px;
+     }
+
  }
 
  @media (max-width: 650px) {
@@ -334,10 +604,76 @@
      }
  }
 
+ @media (max-width: 600px) {
+     .form-grid {
+         grid-template-columns: 1fr;
+     }
+
+     .form-full {
+         grid-column: span 1;
+     }
+
+     .stats-summary-grid {
+         grid-template-columns: 1fr;
+     }
+ }
+
  /* SMALL MOBILE */
 
  @media (max-width: 576px) {
 
+     /* for classes and sections */
+     .card-switcher-container {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 6px;
+     }
+
+     /* Class Cards ke action buttons (Details aur View Students) ko full width stack karna */
+     .card-buttons-row {
+         display: flex;
+         flex-direction: column;
+         gap: 8px;
+         width: 100%;
+     }
+
+     .card-buttons-row .btn {
+         width: 100%;
+         justify-content: center;
+     }
+
+     /* Subject Teacher List button ko mobile viewport par full width target dena */
+     #teacherlistBtn {
+         width: 100%;
+         justify-content: center;
+     }
+
+     .modal-container.single {
+         width: 425px;
+     }
+
+     .form-grid.single.section {
+         grid-template-columns: repeat(2, 1fr);
+     }
+
+     .topbar.glass-card.attendance {
+         display: flex;
+         flex-direction: column;
+         align-items: flex-start;
+     }
+
+     #sectionDetail .modal-footer {
+         width: 100%;
+     }
+
+     #sectionDetail .modal-footer .btn {
+         width: 100%;
+         text-align: center;
+     }
+
+     .student-record.attendance tbody {
+         /* width: 80vw; */
+     }
 
      .profile-wrapper {
          width: 120px;
@@ -350,11 +686,6 @@
          line-height: 1;
          /* display: none; */
      }
-
-     /* 
-     .left-modal {
-         padding: 25px 24px;
-     } */
 
      .wrapper {
          padding: 8px;
@@ -391,7 +722,6 @@
          width: calc(100vw - 20px);
      }
 
-
      .student-img {
          width: 40px;
          height: 40px;
@@ -401,16 +731,42 @@
          padding: 16px;
      }
 
-     .left-modal {
-         padding-bottom: 90px;
-     }
-
      .toast {
          width: calc(100vw - 20px);
      }
+
+     /* FOR STUDENT PANEL ATTENDANCE PAGE */
+
+     .calendar-grid {
+         grid-template-columns: repeat(4, 1fr);
+         gap: 5px;
+     }
+
+     .calendar-day {
+         min-height: 55px;
+         font-size: 11px;
+     }
+
  }
 
  @media (max-width: 430px) {
+
+     .modal-container.single {
+         width: 360px;
+     }
+
+     .modal-overlay {
+         padding: 10px;
+     }
+
+     .modal-footer {
+         flex-direction: column-reverse;
+         gap: 10px;
+     }
+
+     .modal-footer .btn {
+         width: 100%;
+     }
 
      .modal-overlay {
          padding: 4px;
@@ -433,5 +789,90 @@
          line-height: 1;
      }
 
+     /* FOR STUDENT PANEL ATTENDANCE PAGE */
 
+     .calendar-grid {
+         grid-template-columns: repeat(3, 1fr);
+         gap: 5px;
+     }
+
+ }
+
+ /* ==========================================================================
+   320px SCREEN REPAIR (CLASSES PAGE CARD OVERFLOW FIX)
+   ========================================================================== */
+
+ @media (max-width: 360px) {
+
+     /* Main container ki extra padding ko kam karna taake card ko space mile */
+     .wrapper {
+         padding: 6px;
+     }
+
+     .class-page-bottom {
+         padding: 8px;
+     }
+
+     /* Cards grid ko secure karna taake content overflow na ho */
+     .classes-card-grid {
+         display: flex;
+         flex-direction: column;
+         gap: 12px;
+         width: 100%;
+     }
+
+     /* Class card ki dynamic content padding kam karna */
+     .class-card {
+         width: 100%;
+         max-width: 100%;
+         box-sizing: border-box;
+         padding: 12px;
+         margin: 0 auto;
+     }
+
+     .card-dynamic-content {
+         width: 100%;
+         padding: 0;
+     }
+
+     /* Section dynamic buttons (A, B, C) ko choti screen par achhi tarah wrap karna */
+     .card-switcher-container {
+         display: flex;
+         flex-wrap: wrap;
+         gap: 4px;
+     }
+
+     .section-switch-btn {
+         padding: 4px 8px;
+         font-size: 10px;
+     }
+
+     /* Static counters box layout (Students & Academic Load) */
+     .card-stat-row {
+         gap: 4px;
+     }
+
+     .card-stat-box {
+         padding: 4px;
+     }
+
+     .card-stat-label {
+         font-size: 10px;
+     }
+
+     .card-stat-value {
+         font-size: 12px;
+     }
+
+     /* Action buttons ko fit aur space in-between dena */
+     .card-buttons-row {
+         gap: 6px;
+     }
+
+     .card-buttons-row .btn,
+     #teacherlistBtn {
+         font-size: 11px;
+         padding: 8px;
+         width: 100%;
+     }
  }

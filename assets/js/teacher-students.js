@@ -3,7 +3,7 @@ let currentPage = 1;
 
 // for tabs
 document.addEventListener("DOMContentLoaded", () => {
-    fetch("/student_management_system/teacher/get_teacher_assignments.php")
+    fetch("/school_management_system/teacher/APIs/get_teacher_assignments.php")
         .then(res => res.json())
         .then(data => {
 
@@ -101,7 +101,7 @@ function loadTeacherStudents(sectionId, page = 1) {
         document.getElementById("desktopGenderFilter").value;
 
     fetch(
-        `/student_management_system/teacher/get_students.php?secId=${sectionId}&page=${page}&search=${search}&gender=${gender}`
+        `/school_management_system/teacher/APIs/get_students.php?secId=${sectionId}&page=${page}&search=${search}&gender=${gender}`
     )
         .then(res => res.json())
         .then(data => {
@@ -114,6 +114,10 @@ function loadTeacherStudents(sectionId, page = 1) {
                 data.totalPages,
                 page
             );
+
+            showToast("Studends of Assigned Classes And Subjects",
+                "info",
+                "Notice")
         });
 }
 
@@ -128,7 +132,7 @@ function renderTeacherTable(data) {
             <td>${student.sid}</td>
             <td>
                 <img class="student-img"
-                src="/student_management_system/${student.images}">
+                src="/school_management_system/${student.images}">
             </td>
             <td>${student.name}</td>
             <td>${student.email}</td>
@@ -177,7 +181,7 @@ function renderTeacherCards(data) {
                 </div>
 
                 <div class="card-header-flex">
-                    <img src="/student_management_system/${student.images}">
+                    <img src="/school_management_system/${student.images}" class="student-img">
                     <div class="card-header-info">
                         <h4>${student.name}</h4>
                         <p>Class ${student.class_id} •
@@ -230,7 +234,7 @@ function loadAllStudents(page = 1) {
         document.getElementById("desktopGenderFilter").value;
 
     fetch(
-        `/student_management_system/teacher/get_all_students.php?page=${page}&search=${search}&gender=${gender}`
+        `/school_management_system/teacher/APIs/get_all_students.php?page=${page}&search=${search}&gender=${gender}`
     )
         .then(res => res.json())
         .then(data => {
@@ -245,6 +249,10 @@ function loadAllStudents(page = 1) {
             );
 
         });
+
+    showToast("All Students",
+        "info",
+        "Notice")
 }
 
 function loadCurrentTab(page = 1) {

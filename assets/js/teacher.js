@@ -6,7 +6,7 @@ function loadTeachers(page = 1) {
     let sectionFilter = document.querySelector("#desktopSectionFilter")?.value || "All";
     let genderFilter = document.querySelector("#desktopGenderFilter")?.value || "All";
 
-    fetch(`/student_management_system/admin/load_teachers.php/?page=${page}&search=${search}&class=${classFilter}&section=${sectionFilter}&gender=${genderFilter}`)
+    fetch(`/school_management_system/admin/APIs/load_teachers.php/?page=${page}&search=${search}&class=${classFilter}&section=${sectionFilter}&gender=${genderFilter}`)
         .then(res => res.json())
         .then(data => {
 
@@ -59,7 +59,7 @@ function renderTeacherTable(data) {
             teacherTable += `
                 <tr class="teacher-table-row">
                     <td class="teacher-id-col">${teacher.tid}</td>
-                    <td><img class="student-img" src="/student_management_system/${teacher.images}"></td>
+                    <td><img class="student-img" src="/school_management_system/${teacher.images}"></td>
                     <td>${teacher.name}</td>
                     <td>
                     <div class="contact-cell">
@@ -76,7 +76,10 @@ function renderTeacherTable(data) {
                     <span class="status ${teacher.status === "Active" ? "active" : ""}">${teacher.status}</span></td>
                     <td>
                     <div class="btns-action">
-                        <button class="btn-action edit teacher" title="Edit"><i class="fa-solid fa-pen"></i></button>
+                    <button type="button" class="btn-action view view-teacher-details-btn" data-id="${teacher.tid}" title="View Details">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+                        <button class="btn-action edit teacher" title="Edit" data-id="${teacher.tid}"><i class="fa-solid fa-pen"></i></button>
                         <a class="btn-action delete teacher" href="deletephp.php?delete=${teacher.tid}" title="Delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
                     </td>
@@ -110,7 +113,7 @@ function renderCard(data) {
                 <div class="student-mobile-card">
 
                 <div class="card-top-bar">
-                    <span class="card-student-id">${teacher.sid}</span>
+                    <span class="card-student-id">${teacher.tid}</span>
                     <div class="card-top-actions">
                         <span class="status active" style="font-size:10px; padding:4px 10px;">${teacher.status}</span>
 
@@ -118,18 +121,26 @@ function renderCard(data) {
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                         <div class="card-options-dropdown" id="dropdown">
-                    <button class="dropdown-opt">
-                        <i class="fa-solid fa-pen" style="color:#2563eb;"></i> Edit Student
-                    </button>
-                    <button class="dropdown-opt opt-delete">
-                        <i class="fa-solid fa-trash"></i> Delete
-                    </button>
-                </div>
+
+                            <button type="button" class="dropdown-opt opt-view-teacher view" 
+                                    title="View Details" data-id="${teacher.tid}">
+                                <i class="fa-solid fa-eye"></i> View Details
+                            </button>
+                        
+                            <button class="dropdown-opt opt-edit" data-id="${teacher.tid}">
+                                <i class="fa-solid fa-pen" style="color:#2563eb;"></i> Edit Student
+                            </button>
+
+                            <button class="dropdown-opt opt-delete">
+                                <i class="fa-solid fa-trash"></i> Delete
+                            </button>
+
+                        </div>
                     </div>
                 </div>
 
                 <div class="card-header-flex">
-                    <img src="${teacher.images}" class="student-img active-border">
+                    <img src="/school_management_system/${teacher.images}" class="student-img active-border">
                     <div class="card-header-info">
                         <h4>${teacher.name}</h4>
                         <p>Class ${teacher.class_id} •
@@ -355,16 +366,6 @@ function resetFilter() {
 // Search Input par typing detect karne ke liye
 let searchTeacherTimer;
 
-// document.querySelector("#searchInput")?.addEventListener("keyup", function () {
-//     // Purane timer ko clear karein taaki har lafz par request na jaye (Debounce)
-//     clearTimeout(searchTeacherTimer);
-
-//     // Jab user type karna roke tab 300ms baad search kare
-//     searchTeacherTimer = setTimeout(() => {
-//         loadTeachers(1);
-//     }, 300);
-// });
-
 // FOR ADD TEACHER
 let addTeacherBtn = document.querySelector("#Add_teacher_btn");
 let teacherModal = document.querySelector("#teacherModal");
@@ -435,21 +436,24 @@ if (teacherForm) {
 
 // FOR UPDATE TEACHER
 document.addEventListener("click", function (e) {
-    let updateTeacherBtn = e.target.closest(".btn-action.edit.teacher");
+
+    let updateTeacherBtn = e.target.closest(".btn-action.edit.teacher") || e.target.closest(".opt-edit");
 
     if (updateTeacherBtn && teacherModal) {
         console.log("Edit button clicked");
 
-        let teacher_data_row = updateTeacherBtn.closest(".teacher-table-row");
-        let teacherId = teacher_data_row.querySelector(".teacher-id-col").innerText;
+        // let teacher_data_row = updateTeacherBtn.closest(".teacher-table-row");
+        // let teacherId = teacher_data_row.querySelector(".teacher-id-col").innerText;
 
-        fetch("/student_management_system/admin/editTeacher.php?edit=" + teacherId)
+        let teacherId = updateTeacherBtn.getAttribute("data-id");
+
+        fetch("/school_management_system/admin/APIs/editTeacher.php?edit=" + teacherId)
             .then(response => response.json())
             .then(data => {
 
-                document.querySelector(".card-picture").innerHTML =
+                document.querySelector("#teacher-card-picture").innerHTML =
                     `
-                            <img src= "/student_management_system/${data.teacher_img}" class=""> 
+                            <img src= "/school_management_system/${data.teacher_img}" class=""> 
                             <div class="avatar-overlay">
                                 <i class="fa-solid fa-camera"></i>
                                 <span>Change Photo</span>
@@ -466,7 +470,7 @@ document.addEventListener("click", function (e) {
                 document.querySelector("#qualification-input").value = data.teacher_qualification;
                 document.querySelector("#experience-input").value = data.teacher_experience_years;
                 document.querySelector("#salary-input").value = data.teacher_salary;
-                // document.querySelector("#maritalStatusDropdown-input").value = data.teacher_mariral_status;
+                document.querySelector("#joining_date-input").value = data.teacher_joining_date;
 
                 loadSections(
                     data.student_class,
@@ -477,13 +481,20 @@ document.addEventListener("click", function (e) {
                 let remove_photoBtn = document.querySelector(".remove-photo-btn");
                 remove_photoBtn.style.display = "flex";
 
+                // FOR CHANGE HEADER HEADING OF UPDATE
+                let headings = document.querySelectorAll(".modal-heading");
+                headings.forEach((heading) => {
+                    heading.innerText = "Edit Teacher Profile";
+                });
+
                 // open modal
                 teacherModal.classList.add("open");
             })
 
     }
 
-});// FOR DELETE
+});
+// FOR DELETE
 document.addEventListener("click", function (e) {
 
     let deleteTeacherBtn = e.target.closest(".delete.teacher");
@@ -504,5 +515,102 @@ document.addEventListener("click", function (e) {
         );
 
     }
+
+});
+
+// FOR OPEN ADD TEACHER MODAL IN SMALL SCREENS
+let mobileAddTeacherBtn = document.querySelector(".add-mobile-btn"); // Aap chahein to unique class bhi de sakte hain jaise .add-teacher-mobile-btn
+
+if (mobileAddTeacherBtn && teacherModal) {
+    mobileAddTeacherBtn.addEventListener("click", function () {
+
+        if (typeof resetTeacherModal === "function") {
+            resetTeacherModal();
+        }
+
+        document.querySelector("#teacher-id-input") ? document.querySelector("#teacher-id-input").value = "" : null;
+        document.querySelector("#teacher-old-image") ? document.querySelector("#teacher-old-image").value = "" : null;
+        document.querySelector("#teacher-image-input") ? document.querySelector("#teacher-image-input").value = "" : null;
+
+        document.querySelector("#teacher-name-input") ? document.querySelector("#teacher-name-input").value = "" : null;
+        document.querySelector("#teacher-age-input") ? document.querySelector("#teacher-age-input").value = "" : null;
+        document.querySelector("#teacher-phone-input") ? document.querySelector("#teacher-phone-input").value = "" : null;
+        document.querySelector("#teacher-address-input") ? document.querySelector("#teacher-address-input").value = "" : null;
+        document.querySelector("#teacher-email-input") ? document.querySelector("#teacher-email-input").value = "" : null;
+
+        if (document.querySelector("#teacherGenderDropdown")) {
+            document.querySelector("#teacherGenderDropdown").value = "Male";
+        }
+        if (document.querySelector("#teacherStatusDropdown")) {
+            document.querySelector("#teacherStatusDropdown").value = "Active";
+        }
+
+        // 3. Photo preview ko default icon par reset karein
+        let teacher_remove_photoBtn = document.querySelector(".teacher-remove-photo-btn");
+        if (teacher_remove_photoBtn) {
+            teacher_remove_photoBtn.style.display = "none";
+        }
+
+        // 4. Finally, teacher modal open karein
+        teacherModal.classList.add("open");
+    });
+}
+
+// Teacher View Details Click handler aur Data Fetching
+
+const viewTeacherModal = document.getElementById("viewTeacherModal");
+
+document.addEventListener("click", function (e) {
+
+    let btn = e.target.closest(".view-teacher-details-btn") || e.target.closest(".opt-view-teacher");
+
+    if (!btn) return;
+
+    let teacherId = btn.getAttribute("data-id");
+
+    fetch(`/school_management_system/admin/APIs/editTeacher.php?edit=${teacherId}`)
+        .then((res) => res.json())
+        .then((data) => {
+
+            document.getElementById("view-teacher-name").innerText = data.teacher_name;
+            document.getElementById("view-teacher-email").innerText = data.teacher_email || "N/A";
+            document.getElementById("view-teacher-phone").innerText = data.teacher_phone_num;
+            document.getElementById("view-teacher-dob").innerText = data.teacher_dob || "N/A";
+            document.getElementById("view-teacher-qualification").innerText = data.teacher_qualification || "N/A";
+            document.getElementById("view-teacher-gender").innerText = data.teacher_gender;
+            document.getElementById("view-teacher-joining").innerText = data.teacher_joining_date || "N/A"; // Agar API me joining_date hai to chal jayega
+            document.getElementById("view-teacher-address").innerText = data.teacher_address;
+
+            // Status Badge Handle Karna
+            let statusTag = document.getElementById("view-teacher-status");
+            // Agar status property teacher_status hai to use change kar lein, abhi data.status lagaya hai:
+            let statusValue = data.teacher_status || data.status || "Active";
+            statusTag.innerText = statusValue;
+
+            if (statusValue === "Active") {
+                statusTag.style.background = "rgba(16, 185, 129, 0.12)";
+                statusTag.style.color = "#10b981";
+            } else {
+                statusTag.style.background = "rgba(100, 116, 139, 0.12)";
+                statusTag.style.color = "#64748b";
+            }
+
+            // Image Handle Karna (Exact data.teacher_img ke sath)
+            let imgContainer = document.getElementById("view-teacher-img-container");
+            if (data.teacher_img) {
+                imgContainer.innerHTML = `
+                        <img src="/school_management_system/${data.teacher_img}">
+                    `;
+            } else {
+                imgContainer.innerHTML = `
+                        <i class="fa-solid fa-user" style="font-size:40px;"></i>
+                    `;
+            }
+
+            // Open Modal
+            viewTeacherModal.classList.add("open");
+
+        })
+        .catch(err => console.error("Error fetching teacher details:", err));
 
 });

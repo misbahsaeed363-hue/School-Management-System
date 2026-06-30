@@ -1,6 +1,6 @@
  <?php
     // include db
-    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/config/connection.php";
     ?>
 
  <!-- FLOATING FILTER BOTTOM SHEET (MOBILE ONLY) -->

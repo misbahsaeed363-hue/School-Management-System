@@ -1,7 +1,7 @@
 <?php
 session_start();
 // include db
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/config/connection.php";
 
 if (isset($_POST['email']) && isset($_POST['password'])) {
 
@@ -28,16 +28,36 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
         $_SESSION['user_email'] = $user['email'];
         $_SESSION['role'] = $user['role'];
         $_SESSION['tid'] = $user['tid'];
-        echo $_SESSION['tid'];
 
         // ROLE REDIRECT
         if ($user['role'] == "admin") {
+
+            $_SESSION['toast'] = [
+                "type" => "success",
+                "title" => "Login Successfull",
+                "message" => "Successfully login to your Profile"
+            ];
+
             header("Location: admin/dashboard.php");
             exit;
         } elseif ($user['role'] == "teacher") {
+
+            $_SESSION['toast'] = [
+                "type" => "success",
+                "title" => "Login Successfull",
+                "message" => "Successfully login to your Profile"
+            ];
+
             header("Location: teacher/dashboard.php");
             exit;
         } else {
+
+            $_SESSION['toast'] = [
+                "type" => "success",
+                "title" => "Login Successfull",
+                "message" => "Successfully login to your Profile"
+            ];
+
             header("Location: student/dashboard.php");
             exit;
         }

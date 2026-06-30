@@ -6,6 +6,7 @@ const menuToggle = document.getElementById("menuToggle");
 const sidebar = document.getElementById("sidebar");
 const overlay = document.getElementById("sidebarOverlay");
 const bottomFilter = document.querySelector("#bottomSheetOverlay");
+const viewStudentModal = document.querySelector("#viewStudentModal");
 
 if (menuToggle) {
 
@@ -131,64 +132,6 @@ function loadSections(classId, selectedSection = null) {
         });
 }
 
-// for update student data
-// let updateBtn = document.querySelectorAll(".btn-action.edit");
-// console.log(updateBtn);
-
-// if (updateBtn && studentModal) {
-
-//     updateBtn.forEach(btn => {
-
-//         btn.addEventListener('click', function () {
-
-//             let student_data_row = this.closest(".student-table-row");
-//             let studentId = student_data_row.querySelector(".student-id-col").innerText;
-
-//             fetch("editStudent.php?edit=" + studentId)
-//                 .then(response => response.json())
-//                 .then(data => {
-
-//                     document.querySelector(".card-picture").innerHTML =
-//                         `
-//                     <img src= "${data.student_img}" class=""> 
-//                     <div class="avatar-overlay">
-//                         <i class="fa-solid fa-camera"></i>
-//                         <span>Change Photo</span>
-//                     </div>
-//                     `
-//                     document.querySelector("#id-input").value = data.student_id;
-//                     document.querySelector("#old-image").value = data.student_img;
-//                     document.querySelector("#name-input").value = data.student_name;
-//                     document.querySelector("#age-input").value = data.student_age;
-//                     document.querySelector("#phone-input").value = data.student_phone_num;
-//                     document.querySelector("#address-input").value = data.student_address;
-//                     document.querySelector("#email-input").value = data.student_email;
-//                     document.querySelector(".selectClass").value = data.student_class;
-//                     document.querySelector("#genderDropdown").value = data.student_gender;
-//                     document.querySelector("#statusDropdown").value = data.student_status;
-
-//                     document.querySelector(".selectClass").value = data.student_class;
-
-//                     loadSections(
-//                         data.student_class,
-//                         data.student_section
-//                     );
-
-//                     // show remove photo btn button
-//                     let remove_photoBtn = document.querySelector(".remove-photo-btn");
-//                     remove_photoBtn.style.display = "flex";
-
-//                     // open modal
-//                     studentModal.classList.add("open");
-//                 })
-
-//         })
-
-//     })
-
-
-// }
-
 
 // FOR ADD CLASS OPEN IN ADD SECTION MODAL
 let addSection = document.querySelector("#Add_section_btn");
@@ -202,11 +145,26 @@ if (addSection && sectionModal) {
     })
 
 }
-if (sectionModal) {
-    sectionModal.addEventListener("submit", function (e) {
-        e.preventDefault();
-    })
-}
+
+document.addEventListener("DOMContentLoaded", function () {
+    let addSectionForm = document.querySelector("#addsectionModal");
+
+    if (addSectionForm) {
+        addSectionForm.addEventListener("submit", function (e) {
+
+            e.preventDefault();
+
+            openConfirmBox(
+                "Add Section",
+                "Are you sure you want to add this section?",
+                false,
+                () => {
+                    addSectionForm.submit();
+                }
+            );
+        })
+    }
+})
 
 
 // FOR ADD CLASS OPEN IN SECTION DETAIL MODAL AND FETCH DATA
@@ -219,7 +177,7 @@ sec_DetailBtn.forEach(btn => {
 
         let classId = this.dataset.classId;
 
-        fetch("get_class_details.php?class_id=" + classId)
+        fetch("/school_management_system/admin/APIs/get_class_details.php?class_id=" + classId)
 
             .then(response => response.json())
 
@@ -288,7 +246,7 @@ document.querySelectorAll(".subject-teacher-list-trigger").forEach(btn => {
             .innerText = className + " (Section" + sectionName + ")";
 
         // fetch data
-        fetch("get_subject_teachers.php?section_id=" + sectionId)
+        fetch("/school_management_system/admin/APIs/get_subject_teachers.php?section_id=" + sectionId)
 
             .then(response => response.json())
             .then(data => {
@@ -348,80 +306,19 @@ let closeModal = () => {
         subject_TeacherModal.classList.remove("open");
     }
 
-    if (teacherModal) {
+    if (typeof teacherModal !== "undefined" && teacherModal) {
         teacherModal.classList.remove("open");
     }
 
+    if (viewStudentModal) {
+        viewStudentModal.classList.remove("open");
+    }
+
+    if (typeof viewTeacherModal !== "undefined" && viewTeacherModal) {
+        viewTeacherModal.classList.remove("open");
+    }
+
 }
-
-// ---------APPLY FILTERS----------
-// let searchValue = document.querySelector("#searchInput");
-// if (searchValue) {
-//     searchValue.addEventListener("keyup", filterTable);
-// }
-
-// call function
-
-// function filterTable() {
-
-//     // for apply filter on student record
-//     let searchInput = searchValue.value.toLowerCase();
-
-//     let classFilter = document.querySelector("#desktopClassFilter").value;
-//     let genderFilter = document.querySelector("#desktopGenderFilter").value;
-//     let sectionFilter = document.querySelector("#desktopSectionFilter").value;
-//     let applyMobileFiltersBtn = document.querySelector(".applyMobileFiltersBtn");
-
-//     let rows = document.querySelectorAll("#studentTable tbody tr");
-
-//     rows.forEach((row) => {
-
-//         let id = row.cells[0].innerText.toLowerCase();
-//         let name = row.cells[1].innerText.toLowerCase();
-//         let email = row.cells[2].innerText.toLowerCase();
-//         let gender = row.cells[4].innerText.trim();
-//         let studentClass = row.cells[6].innerText.trim();
-
-//         let searchMatch = id.includes(searchInput) || name.includes(searchInput) || email.includes(searchInput);
-//         let genderMatch = genderFilter == "All" || genderFilter == gender;
-//         let classMatch = classFilter == "All" || studentClass.startsWith(classFilter);
-//         let sectionMatch = sectionFilter == "All" || studentClass.endsWith(sectionFilter);
-
-//         if (searchMatch && genderMatch && classMatch && sectionMatch) {
-//             row.style.display = "";
-//         } else {
-//             row.style.display = "none";
-//         }
-//     });
-
-//     if (applyMobileFiltersBtn) {
-//         applyMobileFiltersBtn.addEventListener("click", function () {
-//             bottomFilter.classList.remove("open");
-//         })
-//     }
-// }
-
-// // to connect desktop and mobile filter
-// const desktopClass = document.getElementById("desktopClassFilter");
-// const desktopSection = document.getElementById("desktopSectionFilter");
-// const desktopGender = document.getElementById("desktopGenderFilter");
-// console.log(desktopClass);
-// console.log(desktopSection);
-
-// const mobileClass = document.getElementById("mobileClassFilter");
-// const mobileSection = document.getElementById("mobileSectionFilter");
-// const mobileGender = document.getElementById("mobileGenderFilter");
-// console.log(mobileClass);
-// console.log(mobileSection);
-
-// FOR DESKTOP
-// if (desktopClass) {
-//     desktopClass.addEventListener("change", function () {
-
-//         mobileClass.value = this.value;
-
-//     })
-// };
 
 // if (desktopSection) {
 //     desktopSection.addEventListener("change", function () {
@@ -477,7 +374,7 @@ document.querySelectorAll(".section-switch-btn").forEach(button => {
         let sectionId = this.dataset.sectionId;
         let classId = this.dataset.classId;
 
-        fetch("get_section_data.php?section_id=" + sectionId + "&class_id=" + classId)
+        fetch("/school_management_system/admin/APIs/get_section_data.php?section_id=" + sectionId + "&class_id=" + classId)
 
             .then(response => response.json())
 
@@ -579,51 +476,86 @@ horizontalBar.forEach((bar, index) => {
 
 })
 
+/* ==============================================
 // TO SHOW IMAGE BEFORE UPLOAD
-let cardPicture = document.querySelector(".card-picture");
-let imageInput = document.querySelector("#image-input");
-// let image = document.querySelector(".previewImg");
+   IMAGE UPLOAD & PREVIEW (STUDENT & TEACHER)
+================================================= */
 
-if (cardPicture) {
-    cardPicture.addEventListener('click', function () {
+// 1. STUDENT IMAGE HANDLER
+let studentCardPicture = document.querySelector("#student-card-picture");
+let studentImageInput = document.querySelector(".student-image-input");
 
-        imageInput.click();
+if (studentCardPicture && studentImageInput) {
+    studentCardPicture.addEventListener('click', function () {
+        studentImageInput.click();
+    });
 
-    })
-}
-
-//FOR PRIVIEW Image
-if (imageInput) {
-
-    imageInput.addEventListener('change', function () {
-
+    studentImageInput.addEventListener('change', function () {
         const file = this.files[0];
-
-        cardPicture.innerHTML = `
-    <img src= "${URL.createObjectURL(file)}" class=""> 
-     <div class="avatar-overlay">
-        <i class="fa-solid fa-camera"></i>
-        <span>Change Photo</span>
-    </div>
-    `
-
-        let remove_photoBtn = document.querySelector(".remove-photo-btn");
-        remove_photoBtn.style.display = "flex";
-
-    })
-
+        if (file) {
+            studentCardPicture.innerHTML = `
+                <img src="${URL.createObjectURL(file)}" class=""> 
+                <div class="avatar-overlay">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Change Photo</span>
+                </div>
+            `;
+            let removeBtn = studentCardPicture.closest('.profile-wrapper').querySelector(".remove-photo-btn");
+            if (removeBtn) removeBtn.style.display = "flex";
+        }
+    });
 }
 
-// FOR RESET IMAGE
-function resetImage() {
-    cardPicture.innerHTML = `
-    <i class="fa-solid fa-user"></i>
+// 2. TEACHER IMAGE HANDLER
+let teacherCardPicture = document.querySelector("#teacher-card-picture");
+let teacherImageInput = document.querySelector(".teacher-image-input");
 
-    <div class="avatar-overlay">
-        <i class="fa-solid fa-camera"></i>
-        <span>Change Photo</span>
-    </div>
-    `
+if (teacherCardPicture && teacherImageInput) {
+    teacherCardPicture.addEventListener('click', function () {
+        teacherImageInput.click();
+    });
+
+    teacherImageInput.addEventListener('change', function () {
+        const file = this.files[0];
+        if (file) {
+            teacherCardPicture.innerHTML = `
+                <img src="${URL.createObjectURL(file)}" class=""> 
+                <div class="avatar-overlay">
+                    <i class="fa-solid fa-camera"></i>
+                    <span>Change Photo</span>
+                </div>
+            `;
+            let removeBtn = teacherCardPicture.closest('.profile-wrapper').querySelector(".remove-photo-btn");
+            if (removeBtn) removeBtn.style.display = "flex";
+        }
+    });
+}
+
+// 3. RESET IMAGE FUNCTION 
+function resetImage() {
+
+    // Student reset
+    let sPic = document.querySelector("#student-card-picture");
+
+    if (sPic) {
+        sPic.innerHTML = `<i class="fa-solid fa-user"></i><div class="avatar-overlay"><i class="fa-solid fa-camera"></i><span>Upload Photo</span></div>`;
+    }
+
+    // Teacher reset
+    let tPic = document.querySelector("#teacher-card-picture");
+
+    if (tPic) {
+        tPic.innerHTML = `<i class="fa-solid fa-user"></i><div class="avatar-overlay"><i class="fa-solid fa-camera"></i><span>Upload Photo</span></div>`;
+    }
+
+    // Profile reset 
+    let profilecards = document.querySelectorAll(".card-picture.profile");
+    profilecards.forEach(profileCard => {
+        profileCard.innerHTML = `<i class="fa-solid fa-user"></i><div class="avatar-overlay"><i class="fa-solid fa-camera"></i><span>Upload Photo</span></div>`;
+    })
+
+    // Hide remove buttons
+    document.querySelectorAll(".remove-photo-btn").forEach(btn => btn.style.display = "none");
 }
 
 // To make section dropdown dynamically
@@ -853,12 +785,12 @@ if (bottomFilter && filterBtn) {
 // for apply filter and pagination
 function loadStudents(page = 1) {
 
-    let search = document.querySelector("#searchInput").value;
+    let search = document.querySelector("#searchInput")?.value;
     let classFilter = document.querySelector("#desktopClassFilter")?.value || "All";
     let sectionFilter = document.querySelector("#desktopSectionFilter")?.value || "All";
     let genderFilter = document.querySelector("#desktopGenderFilter")?.value || "All";
 
-    fetch(`/student_management_system/admin/load_students.php/?page=${page}&search=${search}&class=${classFilter}&section=${sectionFilter}&gender=${genderFilter}`)
+    fetch(`/school_management_system/admin/APIs/load_students.php/?page=${page}&search=${search}&class=${classFilter}&section=${sectionFilter}&gender=${genderFilter}`)
         .then(res => res.json())
         .then(data => {
 
@@ -866,9 +798,12 @@ function loadStudents(page = 1) {
 
             renderCard(data.data);
 
-            document.querySelector(".pagination-info").innerHTML = `
+            let paginationInfo = document.querySelector(".pagination-info");
+            if (paginationInfo) {
+                paginationInfo.innerHTML = `
             Showing Page ${data.currentPage} of ${data.totalPages} (${data.totalRecords} Students)
             `;
+            }
 
             renderPagination(
                 data.totalPages,
@@ -911,7 +846,7 @@ function renderTable(data) {
             table += `
                 <tr class="student-table-row">
                     <td class="student-id-col">${student.sid}</td>
-                    <td><img class="student-img" src="/student_management_system/${student.images}"></td>
+                    <td><img class="student-img" src="/school_management_system/${student.images}"></td>
                     <td>${student.name}</td>
                     <td>
                     <div class="contact-cell">
@@ -928,6 +863,10 @@ function renderTable(data) {
                     <span class="status ${student.status === "Active" ? "active" : ""}">${student.status}</span></td>
                     <td>
                     <div class="btns-action">
+                    <button type="button" class="btn-action view view-student-details-btn" 
+                            title="View Details">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
                         <button class="btn-action edit" title="Edit"><i class="fa-solid fa-pen"></i></button>
                         <a class="btn-action delete delete-btn" href="deletephp.php?delete=${student.sid}" title="Delete"><i class="fa-solid fa-trash"></i></a>
                     </div>
@@ -974,18 +913,27 @@ function renderCard(data) {
                             <i class="fa-solid fa-ellipsis-vertical"></i>
                         </button>
                         <div class="card-options-dropdown" id="dropdown">
-                    <button class="dropdown-opt">
-                        <i class="fa-solid fa-pen" style="color:#2563eb;"></i> Edit Student
-                    </button>
-                    <button class="dropdown-opt opt-delete">
-                        <i class="fa-solid fa-trash"></i> Delete
-                    </button>
-                </div>
+
+                            <button type="button" class="dropdown-opt opt-view view" 
+                                    title="View Details">
+                                <i class="fa-solid fa-eye"></i> View Details
+                            </button>
+
+                            <button class="dropdown-opt opt-edit mobile-edit-btn" style="color:#2563eb;"
+                                    data-id="${student.sid}">
+                                <i class="fa-solid fa-pen"></i> Edit Student
+                            </button>
+
+                            <button class="dropdown-opt opt-delete mobile-delete-btn"
+                                    data-id="${student.sid}">
+                                <i class="fa-solid fa-trash"></i> Delete
+                            </button>
+                        </div>
                     </div>
                 </div>
 
                 <div class="card-header-flex">
-                    <img src="${student.images}" class="student-img active-border">
+                    <img src="/school_management_system/${student.images}" class="student-img active-border">
                     <div class="card-header-info">
                         <h4>${student.name}</h4>
                         <p>Class ${student.class_id} •
@@ -1230,80 +1178,96 @@ function resetFilter() {
     loadStudents(1);
 }
 
-// FOR UPDATE DATA OF STUDENTS
+// FOR UPDATE DATA OF STUDENTS (BOTH DESKTOP & MOBILE)
 document.addEventListener("click", function (e) {
-    let updateBtn = e.target.closest(".btn-action.edit");
+
+    let updateBtn = e.target.closest(".btn-action.edit") || e.target.closest(".opt-edit");
 
     if (updateBtn && studentModal) {
-        console.log("Edit button clicked");
 
-        let student_data_row = updateBtn.closest(".student-table-row");
-        let studentId = student_data_row.querySelector(".student-id-col").innerText;
+        let studentId = "";
 
-        fetch("/student_management_system/admin/editStudent.php?edit=" + studentId)
-            .then(response => response.json())
-            .then(data => {
+        // Check karein ke click desktop row par hua hai ya mobile card par
+        if (updateBtn.closest(".student-table-row")) {
+            let student_data_row = updateBtn.closest(".student-table-row");
+            studentId = student_data_row.querySelector(".student-id-col").innerText;
+        } else if (updateBtn.closest(".student-mobile-card")) {
+            let student_card = updateBtn.closest(".student-mobile-card");
+            studentId = student_card.querySelector(".card-student-id").innerText;
+        }
 
-                document.querySelector(".card-picture").innerHTML =
-                    `
-                            <img src= "/student_management_system/${data.student_img}" class=""> 
-                            <div class="avatar-overlay">
-                                <i class="fa-solid fa-camera"></i>
-                                <span>Change Photo</span>
-                            </div>
-                            `
-                document.querySelector("#id-input").value = data.student_id;
-                document.querySelector("#old-image").value = data.student_img;
-                document.querySelector("#name-input").value = data.student_name;
-                document.querySelector("#age-input").value = data.student_age;
-                document.querySelector("#phone-input").value = data.student_phone_num;
-                document.querySelector("#address-input").value = data.student_address;
-                document.querySelector("#email-input").value = data.student_email;
-                document.querySelector(".selectClass").value = data.student_class;
-                document.querySelector("#genderDropdown").value = data.student_gender;
-                document.querySelector("#statusDropdown").value = data.student_status;
+        if (studentId) {
+            fetch("/school_management_system/admin/APIs/editStudent.php?edit=" + studentId)
+                .then(response => response.json())
+                .then(data => {
+                    document.querySelector("#student-card-picture").innerHTML = `
+                        <img src= "/school_management_system/${data.student_img}" class=""> 
+                        <div class="avatar-overlay">
+                            <i class="fa-solid fa-camera"></i>
+                            <span>Change Photo</span>
+                        </div>
+                    `;
+                    document.querySelector("#id-input").value = data.student_id;
+                    document.querySelector("#old-image").value = data.student_img;
+                    document.querySelector("#name-input").value = data.student_name;
+                    document.querySelector("#age-input").value = data.student_age;
+                    document.querySelector("#phone-input").value = data.student_phone_num;
+                    document.querySelector("#address-input").value = data.student_address;
+                    document.querySelector("#email-input").value = data.student_email;
+                    document.querySelector(".selectClass").value = data.student_class;
+                    document.querySelector("#genderDropdown").value = data.student_gender;
+                    document.querySelector("#statusDropdown").value = data.student_status;
 
-                document.querySelector(".selectClass").value = data.student_class;
+                    loadSections(data.student_class, data.student_section);
 
-                loadSections(
-                    data.student_class,
-                    data.student_section
-                );
+                    let remove_photoBtn = document.querySelector(".remove-photo-btn");
+                    remove_photoBtn.style.display = "flex";
 
-                // show remove photo btn button
-                let remove_photoBtn = document.querySelector(".remove-photo-btn");
-                remove_photoBtn.style.display = "flex";
+                    // FOR CHANGE HEADER HEADING OF UPDATE
+                    let headings = document.querySelectorAll(".modal-heading");
+                    headings.forEach((heading) => {
+                        heading.innerText = "Edit Student Profile";
+                    });
 
-                // open modal
-                studentModal.classList.add("open");
-            })
-
+                    // Form open modal
+                    studentModal.classList.add("open");
+                });
+        }
     }
-
 });
 
-// FOR DELETE
+// FOR DELETE (BOTH DESKTOP & MOBILE)
 document.addEventListener("click", function (e) {
-
     let deleteBtn = e.target.closest(".delete-btn");
+    let mobileDeleteBtn = e.target.closest(".dropdown-opt.opt-delete");
 
-    if (deleteBtn) {
-
+    if (deleteBtn || mobileDeleteBtn) {
         e.preventDefault();
+        let deleteUrl = "";
 
-        let deleteUrl = deleteBtn.getAttribute("href");
+        if (deleteBtn) {
 
-        openConfirmBox(
-            "Delete Student",
-            "Are you sure you want to delete this student?",
-            true,
-            () => {
-                window.location.href = deleteUrl;
-            }
-        );
+            deleteUrl = deleteBtn.getAttribute("href");
 
+        } else if (mobileDeleteBtn) {
+
+            let card = mobileDeleteBtn.closest(".student-mobile-card");
+            let studentId = card.querySelector(".card-student-id").innerText;
+            deleteUrl = "deletephp.php?delete=" + studentId;
+
+        }
+
+        if (deleteUrl) {
+            openConfirmBox(
+                "Delete Student",
+                "Are you sure you want to delete this student?",
+                true,
+                () => {
+                    window.location.href = deleteUrl;
+                }
+            );
+        }
     }
-
 });
 
 
@@ -1347,9 +1311,139 @@ if (profileContainer) {
 
 }
 
+// FOR STUDENT CARD 3 DOT MENU
+document.addEventListener("click", function (e) {
+
+    let trigger = e.target.closest(".card-options-trigger");
+
+    // agar 3 dot button click hua
+    if (trigger) {
+
+        let dropdown = trigger.parentElement.querySelector(".card-options-dropdown");
+
+        document.querySelectorAll(".card-options-dropdown").forEach(item => {
+            if (item !== dropdown) {
+                item.classList.remove("show");
+            }
+        });
+
+        dropdown.classList.toggle("show");
+        return;
+    }
+
+    document.querySelectorAll(".card-options-dropdown").forEach(item => {
+        item.classList.remove("show");
+    });
+
+});
+
 // FOR OPEN ADD STUDENT MODAL IN SMALL SCREENS
 let mobileAddBtn = document.querySelector(".add-mobile-btn");
 
-if(mobileAddBtn && studentModal){
-    
+if (mobileAddBtn && studentModal) {
+    mobileAddBtn.addEventListener("click", function () {
+
+        resetModal();
+
+        document.querySelector("#id-input").value = "";
+        document.querySelector("#old-image").value = "";
+        document.querySelector("#image-input").value = "";
+
+        document.querySelector("#name-input").value = "";
+        document.querySelector("#age-input").value = "";
+        document.querySelector("#phone-input").value = "";
+        document.querySelector("#address-input").value = "";
+        document.querySelector("#email-input").value = "";
+        document.querySelector(".selectClass").value = "All";
+        document.querySelector("#genderDropdown").value = "Male";
+        document.querySelector("#statusDropdown").value = "Active";
+
+        let remove_photoBtn = document.querySelector(".remove-photo-btn");
+        if (remove_photoBtn) {
+            remove_photoBtn.style.display = "none";
+        }
+
+        resetImage();
+
+        // Modal open karein
+        studentModal.classList.add("open");
+    })
 }
+
+/* ==============================================
+   VIEW STUDENT DETAILS POPUP
+================================================= */
+
+document.addEventListener("click", function (e) {
+
+    let btn = e.target.closest(".view-student-details-btn") || e.target.closest(".opt-view");
+
+    if (!btn) return;
+
+    let studentId = "";
+
+    // Desktop table
+    if (btn.closest(".student-table-row")) {
+        let studentRow = btn.closest(".student-table-row");
+        studentId = studentRow.querySelector(".student-id-col").innerText;
+    }
+    // Mobile card
+    else if (btn.closest(".student-mobile-card")) {
+        let studentCard = btn.closest(".student-mobile-card");
+        studentId = studentCard.querySelector(".card-student-id").innerText;
+    }
+
+    if (studentId) {
+
+        fetch("/school_management_system/admin/APIs/editStudent.php?edit=" + studentId)
+            .then(response => response.json())
+            .then(data => {
+
+                document.getElementById("view-student-name").innerText = data.student_name;
+                document.getElementById("view-student-email").innerText = data.student_email || "N/A";
+                document.getElementById("view-student-phone").innerText = data.student_phone_num;
+                document.getElementById("view-student-age").innerText = data.student_age;
+                document.getElementById("view-student-class").innerText = data.student_class;
+                document.getElementById("view-student-section").innerText = data.student_section;
+                document.getElementById("view-student-gender").innerText = data.student_gender;
+                document.getElementById("view-student-address").innerText = data.student_address;
+
+                // Status configuration
+                let statusTag = document.getElementById("view-student-status");
+                statusTag.innerText = data.student_status;
+
+                if (data.student_status === "Active") {
+                    statusTag.style.background = "rgba(16, 185, 129, 0.12)";
+                    statusTag.style.color = "#10b981";
+                } else {
+                    statusTag.style.background = "rgba(100, 116, 139, 0.12)";
+                    statusTag.style.color = "#64748b";
+                }
+
+                // Image handling
+                let imgContainer = document.getElementById("view-student-img-container");
+                if (data.student_img) {
+                    imgContainer.innerHTML = `
+                        <img src="/school_management_system/${data.student_img}">
+                    `;
+                } else {
+                    imgContainer.innerHTML = `
+                        <i class="fa-solid fa-user" style="font-size:40px;"></i>
+                    `;
+                }
+
+                // Open Modal
+                document.getElementById("viewStudentModal").classList.add("open");
+            });
+    }
+});
+
+
+// Outside click parser to close unified view modal
+window.addEventListener("click", function (e) {
+    let viewModal = document.getElementById("viewStudentModal");
+    if (e.target === viewModal) {
+        closeModal();
+    }
+});
+

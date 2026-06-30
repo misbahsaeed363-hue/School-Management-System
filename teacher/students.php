@@ -1,12 +1,12 @@
 <?php
 // ROLE BASED AUTHENTICATION
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/teacher_auth.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/includes/teacher/teacher_auth.php";
 
 // include sidebar
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/teacher_sidebar.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/includes/teacher/teacher_sidebar.php";
 
 // include db
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/config/connection.php";
 
 ?>
 
@@ -29,44 +29,9 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
         </div>
         <div class="topbar-btns">
 
-            <?php
-
-            $userName = $_SESSION['user_name'];
-            $userEmail = $_SESSION['user_email'];
-            $userRole = $_SESSION['role'];
-
-            $profileImage = !empty($_SESSION['user_image'])
-                ? "/student_management_system/" . $_SESSION['user_image']
-                : "/student_management_system/uploads/profile-img.jpg";
-
-
-            ?>
-
-            <div class="btn-primary" style="padding: 8px 16px; border-radius: 10px; font-size: 12.5px; font-weight: 700;">
-                <?= $userRole ?>
-            </div>
-
-            <!-- USER PROFILE DROPDOWN CONTAINER -->
-            <div class="user-profile-container">
-                <button class="profile-trigger-btn" id="profileTrigger" aria-label="Open user menu">
-                    <img src="<?= $profileImage ?>" alt="User Profile" class="user-avatar">
-                </button>
-
-                <div class="profile-dropdown-menu" id="profileDropdown">
-                    <div class="dropdown-header">
-                        <img src="<?= $profileImage ?>" alt="User Profile" class="dropdown-avatar">
-                        <div class="user-info">
-                            <h4><?= $userName ?></h4>
-                            <p><?= $userEmail ?></p>
-                        </div>
-                    </div>
-                    <hr class="dropdown-divider">
-                    <ul class="dropdown-links">
-                        <li><a href="#" class="menu-action" data-action="Profile"><i class="fa-solid fa-user"></i> My Profile</a></li>
-                        <li><a href="#" class="menu-action" data-action="Settings"><i class="fa-solid fa-gear"></i> Account Settings</a></li>
-                        <li><a href="#" class="menu-action logout-link" data-action="Logout"><i class="fa-solid fa-right-from-bracket"></i> Sign Out</a></li>
-                    </ul>
-                </div>
+            <!-- INCLUDE PROFILE CONTAINER -->
+            <div id="desktop-container">
+                <?php include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/includes/profile-container.php"; ?>
             </div>
 
         </div>
@@ -137,9 +102,9 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
             </div>
 
             <!-- CARDS FOR SMALL SCREEN -->
-           <div id="teacherStudentCards" class="student-cards">
-            <!-- CARD GENERATED DYNAMICALLY THROUGH JS -->
-           </div>
+            <div id="teacherStudentCards" class="student-cards">
+                <!-- CARD GENERATED DYNAMICALLY THROUGH JS -->
+            </div>
 
             <!-- PAGINATION -->
             <!-- <div class="pagination-wrapper" id="desktop-pagination">
@@ -161,10 +126,10 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
     <?php
 
     // confirmation dialogue box
-    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/confirmation-dialogue-box.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/includes/confirmation-dialogue-box.php";
 
     // include floating filter for small screen
-    include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/includes/floating_filter.php";
+    include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/includes/floating_filter.php";
 
     ?>
 
@@ -175,8 +140,8 @@ include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connectio
 </div>
 
 <!-- // include js -->
-<script src="/student_management_system/assets/js/script.js"></script>
-<script src="/student_management_system/assets/js/teacher-students.js"></script>
+<script src="/school_management_system/assets/js/script.js"></script>
+<script src="/school_management_system/assets/js/teacher-students.js"></script>
 <?php if (isset($_SESSION['toast'])) { ?>
     <script>
         document.addEventListener("DOMContentLoaded", function() {

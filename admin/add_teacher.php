@@ -2,7 +2,7 @@
 
 session_start();
 
-include $_SERVER['DOCUMENT_ROOT'] . "/student_management_system/config/connection.php";
+include $_SERVER['DOCUMENT_ROOT'] . "/school_management_system/config/connection.php";
 
 // Get Values
 $id = $_REQUEST['id'] ?? '';
@@ -18,6 +18,7 @@ $experience_years = trim($_REQUEST['experience_years']);
 $salary = trim($_REQUEST['salary']);
 $status = trim($_REQUEST['status']);
 $marital_status = trim($_REQUEST['marital_status']);
+$joining_date = $_REQUEST['joining_date'];
 
 $error = [];
 
@@ -103,7 +104,8 @@ if (!empty($id)) {
         experience_years='$experience_years',
         salary='$salary',
         status='$status',
-        marital_status='$marital_status'
+        marital_status='$marital_status',
+        joining_date = '$joining_date'
 
         WHERE tid='$id'
     ";
@@ -191,8 +193,8 @@ INSERT INTO teachers(
     salary,
     status,
     marital_status,
-    user_id
-
+    user_id,
+    joining_date
 )
 VALUES(
 
@@ -208,8 +210,8 @@ VALUES(
     '$salary',
     '$status',
     '$marital_status',
-    '$user_id'
-
+    '$user_id',
+    '$joining_date'
 )
 ";
 
@@ -233,4 +235,3 @@ if ($result) {
 
 header("Location: teachers.php");
 exit();
-?>

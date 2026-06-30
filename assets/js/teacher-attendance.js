@@ -4,7 +4,7 @@ document.addEventListener(
     function () {
 
         fetch(
-            "/student_management_system/teacher/get_teacher_attendance_classes.php"
+            "/school_management_system/teacher/APIs/get_teacher_attendance_classes.php"
         )
 
             .then(res => res.json())
@@ -84,7 +84,7 @@ function loadAttendence() {
     let saveAttendence = document.querySelector("#saveAttendence");
 
     fetch(
-        "load-data-for-attendence.php?date="
+        "/school_management_system/teacher/APIs/load-data-for-attendence.php?date="
         + attendenceDate
         + "&section="
         + currentSection
@@ -143,7 +143,7 @@ function loadAttendence() {
                 <input type="hidden" name="student_ids[]" value="${item.sid}">
 
                     <td>${item.sid}</td>
-                    <td><img src="${item.images}" class="student-img"></td>
+                    <td><img src="/school_management_system/${item.images}" class="student-img"></td>
                     <td>${item.name}</td>
                     <td>
                     ${item.class_id}-${item.section_name}
